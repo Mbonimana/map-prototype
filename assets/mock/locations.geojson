@@ -1,0 +1,355 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali Convention Centre",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0937,
+                    -1.9547
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali Genocide Memorial",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0596,
+                    -1.9296
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali City Tower",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0619,
+                    -1.9441
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Amahoro Stadium",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1156,
+                    -1.9553
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali Arena",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1118,
+                    -1.9543
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Hotel des Mille Collines",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0613,
+                    -1.9446
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kandt House Museum",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0585,
+                    -1.9483
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali City Hall",
+                "category": "landmark"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0610,
+                    -1.9500
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Question Coffee",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0785,
+                    -1.9542
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bourbon Coffee CBD",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0618,
+                    -1.9445
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Inema Arts Centre",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0844,
+                    -1.9499
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kimironko Market",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1232,
+                    -1.9495
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Simba Supermarket",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1045,
+                    -1.9530
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "UTC Mall Kigali",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0622,
+                    -1.9449
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Nyarutarama Sports Club",
+                "category": "business"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1035,
+                    -1.9467
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "CHUK Hospital",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0588,
+                    -1.9439
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "King Faisal Hospital",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1081,
+                    -1.9536
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "University of Rwanda CST",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0644,
+                    -1.9559
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Mount Kenya University Kigali",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1020,
+                    -1.9570
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Nyabugogo Bus Terminal",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0436,
+                    -1.9390
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali International Airport",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1395,
+                    -1.9686
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "MTN Centre Nyarutarama",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1030,
+                    -1.9450
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bank of Kigali HQ",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0615,
+                    -1.9442
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Equity Bank Kigali",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0625,
+                    -1.9453
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Rwanda Revenue Authority",
+                "category": "service"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1102,
+                    -1.9539
+                ]
+            }
+        }
+    ]
+}
