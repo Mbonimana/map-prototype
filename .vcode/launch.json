@@ -8,6 +8,7 @@
       "program": "lib/main.dart",
       "toolArgs": [
         "--dart-define-from-file=env/.env.dev.json",
+        "--dart-define=GOOGLEMAPSKEY=${env:GOOGLEMAPSKEY}",
         "--web-port",
         "8081"
       ]

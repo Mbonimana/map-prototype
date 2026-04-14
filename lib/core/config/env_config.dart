@@ -7,4 +7,8 @@ class EnvConfig {
     'MAPBOXTOKEN',
     defaultValue: '',
   );
+  static const String googleMapsKey = String.fromEnvironment(
+    'GOOGLEMAPSKEY',
+    defaultValue: '',
+  );
 }
