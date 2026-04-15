@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_prototype_app/core/map/map_engine.dart';
+import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/style_rail.dart';
 
 class MapScreen extends StatefulWidget {
   final MapEngine engine;
   final List<LocationModel> locations;
-  final LatLng startPostion;
+  final AppLatLng startPostion;
 
   const MapScreen({
     super.key,

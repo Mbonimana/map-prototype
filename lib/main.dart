@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
             body: MapScreen(
               engine: engine,
               locations: locations,
-              startPostion: start.position,
+              startPostion: start.position
             ),
 
             bottomNavigationBar: EngineToggle(
