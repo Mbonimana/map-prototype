@@ -12,21 +12,11 @@ class GoogleMapEngine implements MapEngine {
     required MapStyle style,
   }) {
     return _GoogleMapView(
+      key: ValueKey(style), // rebuild on style change
       markers: markers,
       userLocation: userLocation,
       style: style,
     );
-  }
-
-  MapType _mapType(MapStyle style) {
-    switch (style) {
-      case MapStyle.satellite:
-        return MapType.satellite;
-      case MapStyle.terrain:
-        return MapType.terrain;
-      case MapStyle.streets:
-        return MapType.normal;
-    }
   }
 }
 
@@ -36,6 +26,7 @@ class _GoogleMapView extends StatefulWidget {
   final MapStyle style;
 
   const _GoogleMapView({
+    super.key,
     required this.markers,
     required this.userLocation,
     required this.style,
@@ -47,7 +38,6 @@ class _GoogleMapView extends StatefulWidget {
 
 class _GoogleMapViewState extends State<_GoogleMapView> {
   final Set<Marker> _markers = {};
-
   bool _loaded = false;
 
   @override
@@ -77,20 +67,23 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     }
 
     setState(() {
-      _markers.clear();
-      _markers.addAll(result);
+      _markers
+        ..clear()
+        ..addAll(result);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
+      key: ValueKey(widget.style), //style switching
       initialCameraPosition: CameraPosition(
         target: widget.userLocation,
         zoom: 13,
       ),
       mapType: _mapType(widget.style),
       markers: _markers,
+      zoomControlsEnabled: true,
     );
   }
 

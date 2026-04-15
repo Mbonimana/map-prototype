@@ -15,21 +15,11 @@ class MapboxMapEngine implements MapEngine {
     required MapStyle style,
   }) {
     return _MapboxView(
+      key: ValueKey(style),
       markers: markers,
       userLocation: userLocation,
       style: style,
     );
-  }
-
-  String _style(MapStyle style) {
-    switch (style) {
-      case MapStyle.satellite:
-        return MapboxStyles.SATELLITE;
-      case MapStyle.terrain:
-        return MapboxStyles.OUTDOORS;
-      case MapStyle.streets:
-        return MapboxStyles.MAPBOX_STREETS;
-    }
   }
 }
 
@@ -39,6 +29,7 @@ class _MapboxView extends StatefulWidget {
   final MapStyle style;
 
   const _MapboxView({
+    super.key,
     required this.markers,
     required this.userLocation,
     required this.style,
@@ -54,6 +45,7 @@ class _MapboxViewState extends State<_MapboxView> {
   @override
   Widget build(BuildContext context) {
     return MapWidget(
+      key: ValueKey(widget.style),
       styleUri: _style(widget.style),
       cameraOptions: CameraOptions(
         center: Point(
@@ -78,7 +70,6 @@ class _MapboxViewState extends State<_MapboxView> {
 
     for (final m in widget.markers) {
       final path = MapboxIconHelper.getAsset(m.category);
-
       final bytes = await _loadAsset(path);
 
       await manager.create(
@@ -86,7 +77,7 @@ class _MapboxViewState extends State<_MapboxView> {
           geometry: Point(
             coordinates: Position(m.position.longitude, m.position.latitude),
           ),
-          image: bytes, // ✅ correct Mapbox field
+          image: bytes,
         ),
       );
     }
