@@ -4,6 +4,7 @@ import 'package:map_prototype_app/core/map/map_engine.dart';
 import 'package:map_prototype_app/core/utils/goole_marker_icon_helper.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
+import 'package:map_prototype_app/presentation/ui/widgets/location_bottom_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_control_panel.dart';
 
 class GoogleMapEngine implements MapEngine {
@@ -42,6 +43,8 @@ class _GoogleMapView extends StatefulWidget {
 class _GoogleMapViewState extends State<_GoogleMapView> {
   final Set<Marker> _markers = {};
   GoogleMapController? _controller;
+  LocationModel? _selectedLocation;
+  Marker? _temporaryMarker;
 
   @override
   void initState() {
@@ -61,8 +64,16 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           position: LatLng(m.position.lat, m.position.lng),
           infoWindow: InfoWindow(title: m.name),
           icon: icon,
+          onTap: () {
+            if (!mounted) return;
+            setState(() => _selectedLocation = m);
+          },
         ),
       );
+    }
+
+    if (_temporaryMarker != null) {
+      result.add(_temporaryMarker!);
     }
 
     if (!mounted) return;
@@ -73,6 +84,36 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
         ..addAll(result);
     });
   }
+
+  void _onMapLongPress(LatLng position) {
+    final temporaryLocation = LocationModel(
+      name: 'Dropped Pin',
+      category: 'temporary',
+      position: AppLatLng(position.latitude, position.longitude),
+      description: 'Temporary pin dropped by long-press.',
+    );
+
+    final marker = Marker(
+      markerId: const MarkerId('__temporary_pin__'),
+      position: position,
+      infoWindow: const InfoWindow(title: 'Dropped Pin'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+      onTap: () {
+        if (!mounted) return;
+        setState(() => _selectedLocation = temporaryLocation);
+      },
+    );
+
+    setState(() {
+      _temporaryMarker = marker;
+      _markers.removeWhere((m) => m.markerId.value == '__temporary_pin__');
+      _markers.add(marker);
+      _selectedLocation = temporaryLocation;
+    });
+  }
+
+  AppLatLng get _userAppLatLng =>
+      AppLatLng(widget.userLocation.latitude, widget.userLocation.longitude);
 
   // Fly to Kigali
   Future<void> _flyToKigali() async {
@@ -126,6 +167,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           mapType: _mapType(widget.style),
           markers: _markers,
           zoomControlsEnabled: true,
+          onLongPress: _onMapLongPress,
           onMapCreated: (c) => _controller = c,
         ),
         Positioned(
@@ -137,11 +179,23 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
             onReset: _resetCamera,
           ),
         ),
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 280),
+          curve: Curves.easeInOut,
+          left: 0,
+          right: 0,
+          bottom: _selectedLocation != null ? 0 : -260,
+          child: _selectedLocation == null
+              ? const SizedBox.shrink()
+              : LocationBottomPanel(
+                  location: _selectedLocation!,
+                  userLocation: _userAppLatLng,
+                  onClose: () => setState(() => _selectedLocation = null),
+                ),
+        ),
       ],
     );
   }
-
-  
 
   MapType _mapType(MapStyle style) {
     switch (style) {
