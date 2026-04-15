@@ -1,19 +1,20 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_prototype_app/data/model/coordinate_model.dart';
 
 class GeoJsonConverter {
-  // GeoJSON → Flutter
-  static LatLng toLatLng(List coordinates) {
+  // GeoJSON → AppLatLng
+  static AppLatLng toLatLng(List coordinates) {
     final double lng = coordinates[0];
     final double lat = coordinates[1];
-    return LatLng(lat, lng);
+
+    return AppLatLng(lat, lng);
   }
 
-  // Flutter → GeoJSON
-  static List<double> toGeoJson(LatLng point) {
-    return [point.longitude, point.latitude];
+  // AppLatLng → GeoJSON
+  static List<double> toGeoJson(AppLatLng point) {
+    return [point.lng, point.lat];
   }
 
-  static LatLng fromLat(double lat, double lng) {
-    return LatLng(lat, lng);
+  static AppLatLng fromLat(double lat, double lng) {
+    return AppLatLng(lat, lng);
   }
 }

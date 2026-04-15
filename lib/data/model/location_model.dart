@@ -1,10 +1,10 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_prototype_app/core/utils/geojson_converter.dart';
+import 'package:map_prototype_app/data/model/coordinate_model.dart';
 
 class LocationModel {
   final String name;
   final String category;
-  final LatLng position;
+  final AppLatLng position;
 
   LocationModel({
     required this.name,
