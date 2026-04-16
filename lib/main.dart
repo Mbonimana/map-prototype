@@ -5,7 +5,7 @@ import 'package:map_prototype_app/core/map/mapbox_engine.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 import 'package:map_prototype_app/data/services/geojson_services.dart';
 import 'package:map_prototype_app/presentation/ui/screens/map_screen.dart';
-import 'package:map_prototype_app/presentation/ui/widgets/engine_toogle.dart';
+import 'package:map_prototype_app/presentation/ui/widgets/bottom_nav_bar.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 void main() {
