@@ -19,7 +19,7 @@ class LocationBottomPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final distanceText = DistanceCalculator.format(
+    final distanceText = DistanceCalculator().format(
       userLocation,
       location.position,
     );

@@ -1,28 +1,20 @@
-import 'dart:math';
-
+import 'package:latlong2/latlong.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 
 class DistanceCalculator {
-  static const double _earthRadiusKm = 6371;
+  final Distance _distance = const Distance();
 
-  /// Calculates distance between two points using Haversine formula
-  static double calculate(AppLatLng a, AppLatLng b) {
-    final dLat = _degToRad(b.lat - a.lat);
-    final dLng = _degToRad(b.lng - a.lng);
-
-    final lat1 = _degToRad(a.lat);
-    final lat2 = _degToRad(b.lat);
-
-    final h =
-        pow(sin(dLat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dLng / 2), 2);
-
-    final c = 2 * atan2(sqrt(h), sqrt(1 - h));
-
-    return _earthRadiusKm * c;
+  /// Calculates distance between two points using using coordinates
+  double calculate(AppLatLng a, AppLatLng b) {
+    return _distance.as(
+      LengthUnit.Kilometer,
+      LatLng(a.lat, a.lng),
+      LatLng(b.lat, b.lng),
+    );
   }
 
-  /// Optional: formatted string (clean UI usage)
-  static String format(AppLatLng a, AppLatLng b) {
+  // formatted string
+  String format(AppLatLng a, AppLatLng b) {
     final distance = calculate(a, b);
 
     if (distance < 1) {
@@ -31,6 +23,4 @@ class DistanceCalculator {
       return "${distance.toStringAsFixed(2)} km away";
     }
   }
-
-  static double _degToRad(double deg) => deg * (pi / 180);
 }

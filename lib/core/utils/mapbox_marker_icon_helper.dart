@@ -1,6 +1,9 @@
 class MapboxIconHelper {
   static String getAsset(String category) {
     switch (category) {
+      case "user":
+        return "assets/icons/user.png";
+
       case "landmark":
         return "assets/icons/landmark.png";
 
@@ -11,7 +14,7 @@ class MapboxIconHelper {
         return "assets/icons/service.png";
 
       default:
-        return "assets/icons/landmark.png";
+        return "assets/icons/default.png";
     }
   }
 }
