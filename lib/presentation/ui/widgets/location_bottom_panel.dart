@@ -47,13 +47,13 @@ class LocationBottomPanel extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔝 HEADER (FIXED LAYOUT)
+         
             SizedBox(
               height: 28,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  // Drag handle (center)
+                
                   Align(
                     alignment: Alignment.center,
                     child: Container(
@@ -66,7 +66,7 @@ class LocationBottomPanel extends StatelessWidget {
                     ),
                   ),
 
-                  // Close button (right)
+                  // Close button 
                   Positioned(
                     right: 0,
                     top: -6,
