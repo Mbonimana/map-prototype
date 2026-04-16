@@ -23,11 +23,11 @@ class MapControlButton extends StatelessWidget {
           width: 46,
           height: 46,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withAlpha(230),
             borderRadius: BorderRadius.circular(14),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.15),
+                color: Colors.black.withAlpha(38),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               ),
