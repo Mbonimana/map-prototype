@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_prototype_app/core/map/map_engine.dart';
@@ -45,11 +47,46 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
   GoogleMapController? _controller;
   LocationModel? _selectedLocation;
   Marker? _temporaryMarker;
+  final Set<Polygon> _polygons = {};
+  final Set<Polyline> _polylines = {};
 
   @override
   void initState() {
     super.initState();
     _loadMarkers();
+    _loadZones();
+    _loadRoute();
+  }
+
+  final String _noLabelsStyle = '''
+[
+  {
+    "featureType": "poi",
+    "stylers": [{"visibility": "off"}]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [{"visibility": "off"}]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels",
+    "stylers": [{"visibility": "off"}]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "labels",
+    "stylers": [{"visibility": "off"}]
+  }
+]
+''';
+
+  //disable
+  String? _mapStyleFor(MapStyle style) {
+    if (style == MapStyle.streets) {
+      return _noLabelsStyle;
+    }
+    return null;
   }
 
   Future<void> _loadMarkers() async {
@@ -85,6 +122,59 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     });
   }
 
+  Future<void> _loadZones() async {
+    final jsonString = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/mock/zones.geojson');
+
+    final data = jsonDecode(jsonString);
+
+    final List features = data['features'];
+
+    final Set<Polygon> polygons = {};
+
+    for (final f in features) {
+      final name = f['properties']['name'];
+      final coords = f['geometry']['coordinates'][0];
+
+      final List<LatLng> points = coords.map<LatLng>((c) {
+        return LatLng(c[1], c[0]); //  lat,lng swap
+      }).toList();
+
+      polygons.add(
+        Polygon(
+          polygonId: PolygonId(name),
+          points: points,
+          strokeWidth: 2,
+          strokeColor: _getColor(name),
+          fillColor: _getColor(name).withAlpha(75),
+          consumeTapEvents: true,
+          onTap: () {},
+        ),
+      );
+    }
+
+    setState(() {
+      _polygons.clear();
+      _polygons.addAll(polygons);
+    });
+  }
+
+  Color _getColor(String name) {
+    switch (name) {
+      case "Nyamirambo":
+        return Colors.red;
+      case "Kimihurura":
+        return Colors.blue;
+      case "Remera":
+        return Colors.green;
+      case "Kigali Downtown":
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
+  }
+
   void _onMapLongPress(LatLng position) {
     final temporaryLocation = LocationModel(
       name: 'Dropped Pin',
@@ -109,6 +199,33 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
       _markers.removeWhere((m) => m.markerId.value == '__temporary_pin__');
       _markers.add(marker);
       _selectedLocation = temporaryLocation;
+    });
+  }
+
+  Future<void> _loadRoute() async {
+    final jsonString = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/mock/routes.geojson');
+
+    final data = jsonDecode(jsonString);
+
+    final feature = data['features'][0];
+    final coords = feature['geometry']['coordinates'] as List;
+
+    final List<LatLng> points = coords.map<LatLng>((c) {
+      return LatLng(c[1], c[0]); 
+    }).toList();
+
+    final polyline = Polyline(
+      polylineId: const PolylineId("route"),
+      points: points,
+      color: Colors.red,
+      width: 2,
+    );
+
+    setState(() {
+      _polylines.clear();
+      _polylines.add(polyline);
     });
   }
 
@@ -164,11 +281,16 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
             target: widget.userLocation,
             zoom: 13,
           ),
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
           mapType: _mapType(widget.style),
           markers: _markers,
           zoomControlsEnabled: true,
           onLongPress: _onMapLongPress,
           onMapCreated: (c) => _controller = c,
+          style: _mapStyleFor(widget.style),
+          polygons: _polygons,
+          polylines: _polylines,
         ),
         Positioned(
           bottom: 100,

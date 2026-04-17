@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
             body: MapScreen(
               engine: engine,
               locations: locations,
-              startPostion: userLocation, // 🔥 GPS START POINT
+              startPostion: userLocation,
             ),
             bottomNavigationBar: EngineToggle(
               index: index,
