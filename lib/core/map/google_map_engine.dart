@@ -75,13 +75,13 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
 ]
 ''';
 
-//disable 
-String? _mapStyleFor(MapStyle style) {
-  if (style == MapStyle.streets) {
-    return _noLabelsStyle;
+  //disable
+  String? _mapStyleFor(MapStyle style) {
+    if (style == MapStyle.streets) {
+      return _noLabelsStyle;
+    }
+    return null;
   }
-  return null;
-}
 
   Future<void> _loadMarkers() async {
     final Set<Marker> result = {};
@@ -195,13 +195,14 @@ String? _mapStyleFor(MapStyle style) {
             target: widget.userLocation,
             zoom: 13,
           ),
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
           mapType: _mapType(widget.style),
           markers: _markers,
           zoomControlsEnabled: true,
           onLongPress: _onMapLongPress,
           onMapCreated: (c) => _controller = c,
           style: _mapStyleFor(widget.style),
-          
         ),
         Positioned(
           bottom: 100,

@@ -1,0 +1,141 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Nyamirambo",
+                "category": "zone"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            30.0360,
+                            -1.9890
+                        ],
+                        [
+                            30.0500,
+                            -1.9890
+                        ],
+                        [
+                            30.0500,
+                            -1.9750
+                        ],
+                        [
+                            30.0360,
+                            -1.9750
+                        ],
+                        [
+                            30.0360,
+                            -1.9890
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kimihurura",
+                "category": "zone"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            30.0750,
+                            -1.9650
+                        ],
+                        [
+                            30.0950,
+                            -1.9650
+                        ],
+                        [
+                            30.0950,
+                            -1.9450
+                        ],
+                        [
+                            30.0750,
+                            -1.9450
+                        ],
+                        [
+                            30.0750,
+                            -1.9650
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Remera",
+                "category": "zone"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            30.1000,
+                            -1.9650
+                        ],
+                        [
+                            30.1200,
+                            -1.9650
+                        ],
+                        [
+                            30.1200,
+                            -1.9450
+                        ],
+                        [
+                            30.1000,
+                            -1.9450
+                        ],
+                        [
+                            30.1000,
+                            -1.9650
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali Downtown",
+                "category": "zone"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            30.0550,
+                            -1.9550
+                        ],
+                        [
+                            30.0750,
+                            -1.9550
+                        ],
+                        [
+                            30.0750,
+                            -1.9400
+                        ],
+                        [
+                            30.0550,
+                            -1.9400
+                        ],
+                        [
+                            30.0550,
+                            -1.9550
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}

@@ -113,27 +113,17 @@ class _MapboxViewState extends State<_MapboxView> {
   Future<void> _onStyleLoaded(mapbox.StyleLoadedEventData eventData) async {
     await _removeAllLabels();
     await _addMarkers();
-    await _addUserLocationMarker();
+    // await _addUserLocationMarker();
+    await _enableUserLocation();
   }
 
   //user location
 
-  Future<void> _addUserLocationMarker() async {
-    final manager = await mapboxMap!.annotations.createPointAnnotationManager();
+  Future<void> _enableUserLocation() async {
+    if (mapboxMap == null) return;
 
-    final bytes = await _loadAsset(MapboxIconHelper.getAsset('user'));
-
-    await manager.create(
-      mapbox.PointAnnotationOptions(
-        geometry: mapbox.Point(
-          coordinates: mapbox.Position(
-            widget.userLocation.lng,
-            widget.userLocation.lat,
-          ),
-        ),
-        image: bytes,
-        iconSize: 1.3,
-      ),
+    await mapboxMap!.location.updateSettings(
+      mapbox.LocationComponentSettings(enabled: true, pulsingEnabled: true),
     );
   }
 
