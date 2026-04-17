@@ -257,6 +257,14 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     );
   }
 
+  Future<void> _goToUserLocation() async {
+    await _controller?.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: widget.userLocation, zoom: 15),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -267,11 +275,12 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
             target: widget.userLocation,
             zoom: 13,
           ),
-          myLocationButtonEnabled: true,
+          myLocationButtonEnabled: false,
           myLocationEnabled: true,
           mapType: _mapType(widget.style),
           markers: _markers,
-          zoomControlsEnabled: true,
+          zoomControlsEnabled: false,
+          
           onLongPress: _onMapLongPress,
           onMapCreated: (c) => _controller = c,
           style: _mapStyleFor(widget.style),
@@ -285,6 +294,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
             onFly: _flyToKigali,
             onTilt: _tiltCamera,
             onReset: _resetCamera,
+            onLocation: _goToUserLocation,
           ),
         ),
         AnimatedPositioned(

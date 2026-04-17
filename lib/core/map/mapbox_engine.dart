@@ -85,6 +85,7 @@ class _MapboxViewState extends State<_MapboxView> {
             onFly: _flyToKigali,
             onTilt: _tiltCamera,
             onReset: _resetCamera,
+            onLocation: _goToUserLocation,
           ),
         ),
 
@@ -111,6 +112,26 @@ class _MapboxViewState extends State<_MapboxView> {
   Future<void> _onMapCreated(mapbox.MapboxMap map) async {
     mapboxMap = map;
   }
+  Future<void> _goToUserLocation() async {
+  final map = mapboxMap;
+  if (map == null) return;
+
+  await map.flyTo(
+    mapbox.CameraOptions(
+      center: mapbox.Point(
+        coordinates: mapbox.Position(
+          widget.userLocation.lng,
+          widget.userLocation.lat,
+        ),
+      ),
+      zoom: 15,
+    ),
+    mapbox.MapAnimationOptions(
+      duration: 1200,
+    ),
+  );
+}
+  
 
   Future<void> _addZones() async {
     final geojson = await DefaultAssetBundle.of(
