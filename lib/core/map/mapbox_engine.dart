@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -234,7 +235,6 @@ class _MapboxViewState extends State<_MapboxView> {
         mapbox.LineLayer(
           id: layerId,
           sourceId: sourceId,
-          // ignore: deprecated_member_use
           lineColor: Colors.blue.value,
           lineWidth: 2.0,
           lineJoin: mapbox.LineJoin.ROUND,

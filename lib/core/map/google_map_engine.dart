@@ -89,6 +89,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     return null;
   }
 
+  // Load Markers
   Future<void> _loadMarkers() async {
     final Set<Marker> result = {};
 
@@ -160,21 +161,6 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     });
   }
 
-  Color _getColor(String name) {
-    switch (name) {
-      case "Nyamirambo":
-        return Colors.red;
-      case "Kimihurura":
-        return Colors.blue;
-      case "Remera":
-        return Colors.green;
-      case "Kigali Downtown":
-        return Colors.orange;
-      default:
-        return Colors.grey;
-    }
-  }
-
   void _onMapLongPress(LatLng position) {
     final temporaryLocation = LocationModel(
       name: 'Dropped Pin',
@@ -213,7 +199,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     final coords = feature['geometry']['coordinates'] as List;
 
     final List<LatLng> points = coords.map<LatLng>((c) {
-      return LatLng(c[1], c[0]); 
+      return LatLng(c[1], c[0]);
     }).toList();
 
     final polyline = Polyline(
@@ -327,6 +313,21 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
         return MapType.terrain;
       case MapStyle.streets:
         return MapType.normal;
+    }
+  }
+
+  Color _getColor(String name) {
+    switch (name) {
+      case "Nyamirambo":
+        return Colors.red;
+      case "Kimihurura":
+        return Colors.blue;
+      case "Remera":
+        return Colors.green;
+      case "Kigali Downtown":
+        return Colors.orange;
+      default:
+        return Colors.grey;
     }
   }
 }
