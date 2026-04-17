@@ -8,7 +8,7 @@ class EnvConfig {
     defaultValue: '',
   );
   static const String googleMapsKey = String.fromEnvironment(
-    'GOOGLEMAPSKEY',
+    'GOOGLE_MAPS_API_KEY',
     defaultValue: '',
   );
 }
