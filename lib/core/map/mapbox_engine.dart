@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -110,10 +111,95 @@ class _MapboxViewState extends State<_MapboxView> {
     mapboxMap = map;
   }
 
+  Future<void> _addZones() async {
+    final geojson = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/mock/zones.geojson');
+
+    final style = mapboxMap?.style;
+    if (style == null) return;
+
+    final decoded = jsonDecode(geojson) as Map<String, dynamic>;
+    final features = (decoded['features'] as List?) ?? const [];
+
+    for (final feature in features) {
+      final featureMap = feature as Map<String, dynamic>;
+      final properties = (featureMap['properties'] as Map?) ?? const {};
+      final zoneName = (properties['name'] ?? 'Unknown').toString();
+      final zoneId = _zoneLayerId(zoneName);
+      final zoneColor = _zoneColor(zoneName);
+
+      final singleFeatureCollection = jsonEncode({
+        'type': 'FeatureCollection',
+        'features': [featureMap],
+      });
+
+      try {
+        await style.addSource(
+          mapbox.GeoJsonSource(
+            id: 'zones-source-$zoneId',
+            data: singleFeatureCollection,
+          ),
+        );
+      } catch (_) {
+        // Source may already exist after a rebuild or style reload.
+      }
+
+      try {
+        await style.addLayer(
+          mapbox.FillLayer(
+            id: 'zones-fill-$zoneId',
+            sourceId: 'zones-source-$zoneId',
+            fillColor: zoneColor.value,
+            fillOpacity: 0.3,
+          ),
+        );
+      } catch (_) {
+        // Layer may already exist after a rebuild or style reload.
+      }
+
+      try {
+        await style.addLayer(
+          mapbox.LineLayer(
+            id: 'zones-border-$zoneId',
+            sourceId: 'zones-source-$zoneId',
+            lineColor: zoneColor.value,
+            lineWidth: 2.0,
+          ),
+        );
+      } catch (_) {
+        // Layer may already exist after a rebuild or style reload.
+      }
+    }
+  }
+
+  Color _zoneColor(String name) {
+    switch (name) {
+      case 'Nyamirambo':
+        return Colors.red;
+      case 'Kimihurura':
+        return Colors.blue;
+      case 'Remera':
+        return Colors.green;
+      case 'Kigali Downtown':
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  String _zoneLayerId(String zoneName) {
+    final normalized = zoneName.toLowerCase().replaceAll(
+      RegExp(r'[^a-z0-9]+'),
+      '-',
+    );
+    return normalized.replaceAll(RegExp(r'^-+|-+$'), '');
+  }
+
   Future<void> _onStyleLoaded(mapbox.StyleLoadedEventData eventData) async {
     await _removeAllLabels();
+    await _addZones();
     await _addMarkers();
-    // await _addUserLocationMarker();
     await _enableUserLocation();
   }
 

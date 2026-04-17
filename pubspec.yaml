@@ -28,3 +28,4 @@ flutter:
     - assets/mock/locations.geojson
     - assets/icons/
     - assets/map_styles/
+    - assets/mock/zones.geojson

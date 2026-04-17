@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_prototype_app/core/map/map_engine.dart';
@@ -45,11 +47,13 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
   GoogleMapController? _controller;
   LocationModel? _selectedLocation;
   Marker? _temporaryMarker;
+  final Set<Polygon> _polygons = {};
 
   @override
   void initState() {
     super.initState();
     _loadMarkers();
+    _loadZones();
   }
 
   final String _noLabelsStyle = '''
@@ -114,6 +118,61 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
         ..clear()
         ..addAll(result);
     });
+  }
+
+  Future<void> _loadZones() async {
+    final jsonString = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/mock/zones.geojson');
+
+    final data = jsonDecode(jsonString);
+
+    final List features = data['features'];
+
+    final Set<Polygon> polygons = {};
+
+    for (final f in features) {
+      final name = f['properties']['name'];
+      final coords = f['geometry']['coordinates'][0];
+
+      final List<LatLng> points = coords.map<LatLng>((c) {
+        return LatLng(c[1], c[0]); //  lat,lng swap
+      }).toList();
+
+      polygons.add(
+        Polygon(
+          polygonId: PolygonId(name),
+          points: points,
+          strokeWidth: 2,
+          strokeColor: _getColor(name),
+          fillColor: _getColor(name).withOpacity(0.3),
+          consumeTapEvents: true,
+          onTap: () {
+            print("Tapped zone: $name");
+          },
+        ),
+      );
+    }
+
+    setState(() {
+      _polygons.clear();
+      _polygons.addAll(polygons);
+    });
+  }
+
+  Color _getColor(String name) {
+    switch (name) {
+      case "Nyamirambo":
+        return Colors.red;
+      case "Kimihurura":
+        return Colors.blue;
+      case "Remera":
+        return Colors.green;
+      case "Kigali Downtown":
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
   }
 
   void _onMapLongPress(LatLng position) {
@@ -203,6 +262,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           onLongPress: _onMapLongPress,
           onMapCreated: (c) => _controller = c,
           style: _mapStyleFor(widget.style),
+          polygons: _polygons,
         ),
         Positioned(
           bottom: 100,
