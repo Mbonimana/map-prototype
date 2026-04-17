@@ -52,6 +52,37 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     _loadMarkers();
   }
 
+  final String _noLabelsStyle = '''
+[
+  {
+    "featureType": "poi",
+    "stylers": [{"visibility": "off"}]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [{"visibility": "off"}]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels",
+    "stylers": [{"visibility": "off"}]
+  },
+  {
+    "featureType": "administrative",
+    "elementType": "labels",
+    "stylers": [{"visibility": "off"}]
+  }
+]
+''';
+
+//disable 
+String? _mapStyleFor(MapStyle style) {
+  if (style == MapStyle.streets) {
+    return _noLabelsStyle;
+  }
+  return null;
+}
+
   Future<void> _loadMarkers() async {
     final Set<Marker> result = {};
 
@@ -169,6 +200,8 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           zoomControlsEnabled: true,
           onLongPress: _onMapLongPress,
           onMapCreated: (c) => _controller = c,
+          style: _mapStyleFor(widget.style),
+          
         ),
         Positioned(
           bottom: 100,

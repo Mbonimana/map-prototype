@@ -19,7 +19,7 @@ class MapboxMapEngine implements MapEngine {
     return _MapboxView(
       key: ValueKey(style),
       markers: markers,
-      userLocation: userLocation, 
+      userLocation: userLocation,
       style: style,
     );
   }
@@ -27,7 +27,7 @@ class MapboxMapEngine implements MapEngine {
 
 class _MapboxView extends StatefulWidget {
   final List<LocationModel> markers;
-  final AppLatLng userLocation; 
+  final AppLatLng userLocation;
   final MapStyle style;
 
   const _MapboxView({
@@ -50,7 +50,6 @@ class _MapboxViewState extends State<_MapboxView> {
   final Map<String, LocationModel> _locationByAnnotationId = {};
 
   mapbox.PointAnnotation? _temporaryPointAnnotation;
-  mapbox.PointAnnotation? _userAnnotation;
 
   LocationModel? _selectedLocation;
 
@@ -73,6 +72,7 @@ class _MapboxViewState extends State<_MapboxView> {
           ),
 
           onMapCreated: _onMapCreated,
+          onStyleLoadedListener: _onStyleLoaded,
           onLongTapListener: _onMapLongTap,
         ),
 
@@ -104,11 +104,14 @@ class _MapboxViewState extends State<_MapboxView> {
     );
   }
 
-// map initialization
+  // map initialization
 
   Future<void> _onMapCreated(mapbox.MapboxMap map) async {
     mapboxMap = map;
+  }
 
+  Future<void> _onStyleLoaded(mapbox.StyleLoadedEventData eventData) async {
+    await _removeAllLabels();
     await _addMarkers();
     await _addUserLocationMarker();
   }
@@ -116,13 +119,11 @@ class _MapboxViewState extends State<_MapboxView> {
   //user location
 
   Future<void> _addUserLocationMarker() async {
-    final manager =
-        await mapboxMap!.annotations.createPointAnnotationManager();
+    final manager = await mapboxMap!.annotations.createPointAnnotationManager();
 
-    final bytes =
-        await _loadAsset(MapboxIconHelper.getAsset('user'));
+    final bytes = await _loadAsset(MapboxIconHelper.getAsset('user'));
 
-    _userAnnotation = await manager.create(
+    await manager.create(
       mapbox.PointAnnotationOptions(
         geometry: mapbox.Point(
           coordinates: mapbox.Position(
@@ -136,11 +137,25 @@ class _MapboxViewState extends State<_MapboxView> {
     );
   }
 
+  Future<void> _removeAllLabels() async {
+    final style = mapboxMap?.style;
+    if (style == null) return;
+
+    final layers = await style.getStyleLayers();
+
+    for (final layer in layers) {
+      final layerType = layer?.type;
+      final layerId = layer?.id;
+      if (layerType == 'symbol' && layerId != null) {
+        await style.setStyleLayerProperty(layerId, 'visibility', 'none');
+      }
+    }
+  }
+
   // markers
 
   Future<void> _addMarkers() async {
-    final manager =
-        await mapboxMap!.annotations.createPointAnnotationManager();
+    final manager = await mapboxMap!.annotations.createPointAnnotationManager();
 
     _annotationManager = manager;
     _locationByAnnotationId.clear();
@@ -152,10 +167,7 @@ class _MapboxViewState extends State<_MapboxView> {
       final annotation = await manager.create(
         mapbox.PointAnnotationOptions(
           geometry: mapbox.Point(
-            coordinates: mapbox.Position(
-              m.position.lng,
-              m.position.lat,
-            ),
+            coordinates: mapbox.Position(m.position.lng, m.position.lat),
           ),
           image: bytes,
         ),
@@ -177,8 +189,7 @@ class _MapboxViewState extends State<_MapboxView> {
 
   //long press to drop pin
 
-  Future<void> _onMapLongTap(
-      mapbox.MapContentGestureContext context) async {
+  Future<void> _onMapLongTap(mapbox.MapContentGestureContext context) async {
     final manager = _annotationManager;
     if (manager == null) return;
 
@@ -196,14 +207,10 @@ class _MapboxViewState extends State<_MapboxView> {
       description: 'Temporary pin dropped',
     );
 
-    final bytes =
-        await _loadAsset(MapboxIconHelper.getAsset('landmark'));
+    final bytes = await _loadAsset(MapboxIconHelper.getAsset('landmark'));
 
     _temporaryPointAnnotation = await manager.create(
-      mapbox.PointAnnotationOptions(
-        geometry: point,
-        image: bytes,
-      ),
+      mapbox.PointAnnotationOptions(geometry: point, image: bytes),
     );
 
     _locationByAnnotationId[_temporaryPointAnnotation!.id] = tempLocation;
@@ -241,9 +248,7 @@ class _MapboxViewState extends State<_MapboxView> {
   Future<void> _flyToKigali() async {
     await mapboxMap?.flyTo(
       mapbox.CameraOptions(
-        center: mapbox.Point(
-          coordinates: mapbox.Position(30.0619, -1.9441),
-        ),
+        center: mapbox.Point(coordinates: mapbox.Position(30.0619, -1.9441)),
         zoom: 15,
       ),
       mapbox.MapAnimationOptions(duration: 2000),
