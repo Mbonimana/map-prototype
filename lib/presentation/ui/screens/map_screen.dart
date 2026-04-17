@@ -37,7 +37,7 @@ class _MapScreenState extends State<MapScreen> {
           Positioned(
             right: 10,
             top: 100,
-            child: StyleRail(
+            child:StyleLayerSelector(
               selected: style,
               onChanged: (s) => setState(() => style = s),
             ),

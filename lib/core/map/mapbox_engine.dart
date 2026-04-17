@@ -1,14 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_prototype_app/core/map/map_engine.dart';
 import 'package:map_prototype_app/core/utils/mapbox_marker_icon_helper.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/location_bottom_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_control_panel.dart';
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 
 class MapboxMapEngine implements MapEngine {
   @override
@@ -20,7 +19,7 @@ class MapboxMapEngine implements MapEngine {
     return _MapboxView(
       key: ValueKey(style),
       markers: markers,
-      userLocation: LatLng(userLocation.lat, userLocation.lng),
+      userLocation: userLocation, 
       style: style,
     );
   }
@@ -28,7 +27,7 @@ class MapboxMapEngine implements MapEngine {
 
 class _MapboxView extends StatefulWidget {
   final List<LocationModel> markers;
-  final LatLng userLocation;
+  final AppLatLng userLocation; 
   final MapStyle style;
 
   const _MapboxView({
@@ -43,29 +42,36 @@ class _MapboxView extends StatefulWidget {
 }
 
 class _MapboxViewState extends State<_MapboxView> {
-  MapboxMap? mapboxMap;
-  PointAnnotationManager? _annotationManager;
-  Cancelable? _annotationTapEvents;
+  mapbox.MapboxMap? mapboxMap;
+
+  mapbox.PointAnnotationManager? _annotationManager;
+  mapbox.Cancelable? _annotationTapEvents;
+
   final Map<String, LocationModel> _locationByAnnotationId = {};
-  PointAnnotation? _temporaryPointAnnotation;
+
+  mapbox.PointAnnotation? _temporaryPointAnnotation;
+  mapbox.PointAnnotation? _userAnnotation;
+
   LocationModel? _selectedLocation;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        MapWidget(
+        mapbox.MapWidget(
           key: ValueKey(widget.style),
           styleUri: _style(widget.style),
-          cameraOptions: CameraOptions(
-            center: Point(
-              coordinates: Position(
-                widget.userLocation.longitude,
-                widget.userLocation.latitude,
+
+          cameraOptions: mapbox.CameraOptions(
+            center: mapbox.Point(
+              coordinates: mapbox.Position(
+                widget.userLocation.lng,
+                widget.userLocation.lat,
               ),
             ),
-            zoom: 13,
+            zoom: 14,
           ),
+
           onMapCreated: _onMapCreated,
           onLongTapListener: _onMapLongTap,
         ),
@@ -79,6 +85,7 @@ class _MapboxViewState extends State<_MapboxView> {
             onReset: _resetCamera,
           ),
         ),
+
         AnimatedPositioned(
           duration: const Duration(milliseconds: 280),
           curve: Curves.easeInOut,
@@ -89,7 +96,7 @@ class _MapboxViewState extends State<_MapboxView> {
               ? const SizedBox.shrink()
               : LocationBottomPanel(
                   location: _selectedLocation!,
-                  userLocation: _userAppLatLng,
+                  userLocation: widget.userLocation,
                   onClose: () => setState(() => _selectedLocation = null),
                 ),
         ),
@@ -97,13 +104,44 @@ class _MapboxViewState extends State<_MapboxView> {
     );
   }
 
-  Future<void> _onMapCreated(MapboxMap map) async {
+// map initialization
+
+  Future<void> _onMapCreated(mapbox.MapboxMap map) async {
     mapboxMap = map;
+
     await _addMarkers();
+    await _addUserLocationMarker();
   }
 
+  //user location
+
+  Future<void> _addUserLocationMarker() async {
+    final manager =
+        await mapboxMap!.annotations.createPointAnnotationManager();
+
+    final bytes =
+        await _loadAsset(MapboxIconHelper.getAsset('user'));
+
+    _userAnnotation = await manager.create(
+      mapbox.PointAnnotationOptions(
+        geometry: mapbox.Point(
+          coordinates: mapbox.Position(
+            widget.userLocation.lng,
+            widget.userLocation.lat,
+          ),
+        ),
+        image: bytes,
+        iconSize: 1.3,
+      ),
+    );
+  }
+
+  // markers
+
   Future<void> _addMarkers() async {
-    final manager = await mapboxMap!.annotations.createPointAnnotationManager();
+    final manager =
+        await mapboxMap!.annotations.createPointAnnotationManager();
+
     _annotationManager = manager;
     _locationByAnnotationId.clear();
 
@@ -112,9 +150,12 @@ class _MapboxViewState extends State<_MapboxView> {
       final bytes = await _loadAsset(path);
 
       final annotation = await manager.create(
-        PointAnnotationOptions(
-          geometry: Point(
-            coordinates: Position(m.position.lng, m.position.lat),
+        mapbox.PointAnnotationOptions(
+          geometry: mapbox.Point(
+            coordinates: mapbox.Position(
+              m.position.lng,
+              m.position.lat,
+            ),
           ),
           image: bytes,
         ),
@@ -128,49 +169,66 @@ class _MapboxViewState extends State<_MapboxView> {
       onTap: (annotation) {
         final selected = _locationByAnnotationId[annotation.id];
         if (selected == null || !mounted) return;
+
         setState(() => _selectedLocation = selected);
       },
     );
   }
+
+  //long press to drop pin
+
+  Future<void> _onMapLongTap(
+      mapbox.MapContentGestureContext context) async {
+    final manager = _annotationManager;
+    if (manager == null) return;
+
+    if (_temporaryPointAnnotation != null) {
+      await manager.delete(_temporaryPointAnnotation!);
+    }
+
+    final point = context.point;
+    final pos = point.coordinates;
+
+    final tempLocation = LocationModel(
+      name: 'Dropped Pin',
+      category: 'temporary',
+      position: AppLatLng(pos.lat.toDouble(), pos.lng.toDouble()),
+      description: 'Temporary pin dropped',
+    );
+
+    final bytes =
+        await _loadAsset(MapboxIconHelper.getAsset('landmark'));
+
+    _temporaryPointAnnotation = await manager.create(
+      mapbox.PointAnnotationOptions(
+        geometry: point,
+        image: bytes,
+      ),
+    );
+
+    _locationByAnnotationId[_temporaryPointAnnotation!.id] = tempLocation;
+
+    if (!mounted) return;
+    setState(() => _selectedLocation = tempLocation);
+  }
+
+  // utils
 
   Future<Uint8List> _loadAsset(String path) async {
     final data = await DefaultAssetBundle.of(context).load(path);
     return data.buffer.asUint8List();
   }
 
-  Future<void> _onMapLongTap(MapContentGestureContext context) async {
-    final manager = _annotationManager;
-    if (manager == null) return;
-
-    if (_temporaryPointAnnotation != null) {
-      await manager.delete(_temporaryPointAnnotation!);
-      _locationByAnnotationId.remove(_temporaryPointAnnotation!.id);
-      _temporaryPointAnnotation = null;
+  String _style(MapStyle style) {
+    switch (style) {
+      case MapStyle.satellite:
+        return mapbox.MapboxStyles.SATELLITE;
+      case MapStyle.terrain:
+        return mapbox.MapboxStyles.OUTDOORS;
+      case MapStyle.streets:
+        return mapbox.MapboxStyles.MAPBOX_STREETS;
     }
-
-    final point = context.point;
-    final position = point.coordinates;
-    final tempLocation = LocationModel(
-      name: 'Dropped Pin',
-      category: 'temporary',
-      position: AppLatLng(position.lat.toDouble(), position.lng.toDouble()),
-      description: 'Temporary pin dropped by long-press.',
-    );
-
-    final bytes = await _loadAsset(MapboxIconHelper.getAsset('landmark'));
-    final tempAnnotation = await manager.create(
-      PointAnnotationOptions(geometry: point, image: bytes),
-    );
-
-    _temporaryPointAnnotation = tempAnnotation;
-    _locationByAnnotationId[tempAnnotation.id] = tempLocation;
-
-    if (!mounted) return;
-    setState(() => _selectedLocation = tempLocation);
   }
-
-  AppLatLng get _userAppLatLng =>
-      AppLatLng(widget.userLocation.latitude, widget.userLocation.longitude);
 
   @override
   void dispose() {
@@ -178,61 +236,51 @@ class _MapboxViewState extends State<_MapboxView> {
     super.dispose();
   }
 
-  //  Fly
+  // camera controls
+
   Future<void> _flyToKigali() async {
     await mapboxMap?.flyTo(
-      CameraOptions(
-        center: Point(coordinates: Position(30.0619, -1.9441)),
+      mapbox.CameraOptions(
+        center: mapbox.Point(
+          coordinates: mapbox.Position(30.0619, -1.9441),
+        ),
         zoom: 15,
       ),
-      MapAnimationOptions(duration: 2000),
+      mapbox.MapAnimationOptions(duration: 2000),
     );
   }
 
-  //  Tilt
   Future<void> _tiltCamera() async {
     await mapboxMap?.flyTo(
-      CameraOptions(
-        center: Point(
-          coordinates: Position(
-            widget.userLocation.longitude,
-            widget.userLocation.latitude,
+      mapbox.CameraOptions(
+        center: mapbox.Point(
+          coordinates: mapbox.Position(
+            widget.userLocation.lng,
+            widget.userLocation.lat,
           ),
         ),
         zoom: 15,
         pitch: 60,
         bearing: 45,
       ),
-      MapAnimationOptions(duration: 3000),
+      mapbox.MapAnimationOptions(duration: 3000),
     );
   }
 
-  //  Reset
   Future<void> _resetCamera() async {
     await mapboxMap?.flyTo(
-      CameraOptions(
-        center: Point(
-          coordinates: Position(
-            widget.userLocation.longitude,
-            widget.userLocation.latitude,
+      mapbox.CameraOptions(
+        center: mapbox.Point(
+          coordinates: mapbox.Position(
+            widget.userLocation.lng,
+            widget.userLocation.lat,
           ),
         ),
         zoom: 13,
         pitch: 0,
         bearing: 0,
       ),
-      MapAnimationOptions(duration: 1500),
+      mapbox.MapAnimationOptions(duration: 1500),
     );
-  }
-
-  String _style(MapStyle style) {
-    switch (style) {
-      case MapStyle.satellite:
-        return MapboxStyles.SATELLITE;
-      case MapStyle.terrain:
-        return MapboxStyles.OUTDOORS;
-      case MapStyle.streets:
-        return MapboxStyles.MAPBOX_STREETS;
-    }
   }
 }

@@ -15,21 +15,31 @@ class LocationBottomPanel extends StatelessWidget {
     required this.onClose,
   });
 
+  static const Color primaryBlue = Color(0xFF1994FF);
+
   @override
   Widget build(BuildContext context) {
-    final distanceText = DistanceCalculator.format(
+    final distanceText = DistanceCalculator().format(
       userLocation,
       location.position,
     );
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeOut,
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(22),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromRGBO(0, 0, 0, 0.12),
+            blurRadius: 18,
+            offset: const Offset(0, -4),
+          ),
+        ],
       ),
       child: SafeArea(
         top: false,
@@ -37,64 +47,102 @@ class LocationBottomPanel extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Drag handle
-            Center(
-              child: Container(
-                width: 40,
-                height: 5,
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[400],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-
-            // Title + Close
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    location.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+         
+            SizedBox(
+              height: 28,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 44,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(0, 0, 0, 0.15),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
-                ),
-                IconButton(icon: const Icon(Icons.close), onPressed: onClose),
-              ],
-            ),
 
-            const SizedBox(height: 4),
-
-            // Category
-            Text(
-              location.category.toUpperCase(),
-              style: TextStyle(
-                color: Colors.blueGrey[600],
-                fontWeight: FontWeight.w500,
+                  // Close button 
+                  Positioned(
+                    right: 0,
+                    top: -6,
+                    child: GestureDetector(
+                      onTap: onClose,
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(0, 0, 0, 0.06),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.close,
+                          size: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 
             const SizedBox(height: 10),
 
-            // Description
+            // Title
             Text(
-              location.description ?? "No description available",
-              style: const TextStyle(height: 1.4),
+              location.name,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+
+            const SizedBox(height: 6),
+
+            // Category badge
+            Text(
+              location.category.toUpperCase(),
+              style: const TextStyle(
+                color: primaryBlue,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
             ),
 
             const SizedBox(height: 12),
 
+            // Description
+            Text(
+              location.description ?? "No description available",
+              style: const TextStyle(
+                height: 1.5,
+                color: Color.fromRGBO(0, 0, 0, 0.75),
+              ),
+            ),
+
+            const SizedBox(height: 14),
+
             // Distance
             Row(
               children: [
-                const Icon(Icons.location_on, size: 18),
+                const Icon(
+                  Icons.location_on,
+                  size: 18,
+                  color: primaryBlue,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   distanceText,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),
