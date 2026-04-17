@@ -201,6 +201,7 @@ class _MapboxViewState extends State<_MapboxView> {
     await _addZones();
     await _addMarkers();
     await _enableUserLocation();
+    await _addRoute();
   }
 
   //user location
@@ -211,6 +212,36 @@ class _MapboxViewState extends State<_MapboxView> {
     await mapboxMap!.location.updateSettings(
       mapbox.LocationComponentSettings(enabled: true, pulsingEnabled: true),
     );
+  }
+
+  Future<void> _addRoute() async {
+    final style = mapboxMap?.style;
+    if (style == null) return;
+
+    final geojson = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/mock/routes.geojson');
+
+    const sourceId = "route-source";
+    const layerId = "route-layer";
+
+    try {
+      await style.addSource(mapbox.GeoJsonSource(id: sourceId, data: geojson));
+    } catch (_) {}
+
+    try {
+      await style.addLayer(
+        mapbox.LineLayer(
+          id: layerId,
+          sourceId: sourceId,
+          // ignore: deprecated_member_use
+          lineColor: Colors.blue.value,
+          lineWidth: 2.0,
+          lineJoin: mapbox.LineJoin.ROUND,
+          lineCap: mapbox.LineCap.ROUND,
+        ),
+      );
+    } catch (_) {}
   }
 
   Future<void> _removeAllLabels() async {

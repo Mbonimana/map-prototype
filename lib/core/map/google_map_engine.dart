@@ -48,12 +48,14 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
   LocationModel? _selectedLocation;
   Marker? _temporaryMarker;
   final Set<Polygon> _polygons = {};
+  final Set<Polyline> _polylines = {};
 
   @override
   void initState() {
     super.initState();
     _loadMarkers();
     _loadZones();
+    _loadRoute();
   }
 
   final String _noLabelsStyle = '''
@@ -145,11 +147,9 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           points: points,
           strokeWidth: 2,
           strokeColor: _getColor(name),
-          fillColor: _getColor(name).withOpacity(0.3),
+          fillColor: _getColor(name).withAlpha(75),
           consumeTapEvents: true,
-          onTap: () {
-            print("Tapped zone: $name");
-          },
+          onTap: () {},
         ),
       );
     }
@@ -199,6 +199,33 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
       _markers.removeWhere((m) => m.markerId.value == '__temporary_pin__');
       _markers.add(marker);
       _selectedLocation = temporaryLocation;
+    });
+  }
+
+  Future<void> _loadRoute() async {
+    final jsonString = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/mock/routes.geojson');
+
+    final data = jsonDecode(jsonString);
+
+    final feature = data['features'][0];
+    final coords = feature['geometry']['coordinates'] as List;
+
+    final List<LatLng> points = coords.map<LatLng>((c) {
+      return LatLng(c[1], c[0]); 
+    }).toList();
+
+    final polyline = Polyline(
+      polylineId: const PolylineId("route"),
+      points: points,
+      color: Colors.red,
+      width: 2,
+    );
+
+    setState(() {
+      _polylines.clear();
+      _polylines.add(polyline);
     });
   }
 
@@ -263,6 +290,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           onMapCreated: (c) => _controller = c,
           style: _mapStyleFor(widget.style),
           polygons: _polygons,
+          polylines: _polylines,
         ),
         Positioned(
           bottom: 100,
