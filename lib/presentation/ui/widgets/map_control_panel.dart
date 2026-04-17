@@ -22,12 +22,11 @@ class MapControlsPanel extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        // Location Button (Customized)
         _StyledMiniButton(
           icon: Icons.my_location,
           onTap: onLocation,
           primaryBlue: primaryBlue,
-          isPrimary: true, // Make this one stand out slightly
+          isPrimary: true, 
         ),
         const SizedBox(height: 12),
 
