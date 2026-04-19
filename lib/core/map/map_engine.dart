@@ -9,5 +9,13 @@ abstract class MapEngine {
     required List<LocationModel> markers,
     required AppLatLng userLocation,
     required MapStyle style,
+    required Function(LocationModel?)
+    onLocationSelected, // Notification callback
   });
+
+  // Camera Controls
+  void flyToKigali();
+  void tiltCamera();
+  void resetCamera();
+  void goToUserLocation();
 }

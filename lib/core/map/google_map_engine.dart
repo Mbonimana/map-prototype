@@ -6,36 +6,51 @@ import 'package:map_prototype_app/core/map/map_engine.dart';
 import 'package:map_prototype_app/core/utils/goole_marker_icon_helper.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
-import 'package:map_prototype_app/presentation/ui/widgets/location_bottom_panel.dart';
-import 'package:map_prototype_app/presentation/ui/widgets/map_control_panel.dart';
 
 class GoogleMapEngine implements MapEngine {
+  _GoogleMapViewState? _state;
+
   @override
   Widget buildMap({
     required List<LocationModel> markers,
-
     required AppLatLng userLocation,
     required MapStyle style,
+    required Function(LocationModel?) onLocationSelected,
   }) {
     return _GoogleMapView(
       key: ValueKey(style),
       markers: markers,
       userLocation: LatLng(userLocation.lat, userLocation.lng),
       style: style,
+      onLocationSelected: onLocationSelected,
+      onCreated: (state) => _state = state,
     );
   }
+
+  @override
+  void flyToKigali() => _state?._flyToKigali();
+  @override
+  void tiltCamera() => _state?._tiltCamera();
+  @override
+  void resetCamera() => _state?._resetCamera();
+  @override
+  void goToUserLocation() => _state?._goToUserLocation();
 }
 
 class _GoogleMapView extends StatefulWidget {
   final List<LocationModel> markers;
   final LatLng userLocation;
   final MapStyle style;
+  final Function(LocationModel?) onLocationSelected;
+  final Function(_GoogleMapViewState) onCreated;
 
   const _GoogleMapView({
     super.key,
     required this.markers,
     required this.userLocation,
     required this.style,
+    required this.onLocationSelected,
+    required this.onCreated,
   });
 
   @override
@@ -45,102 +60,60 @@ class _GoogleMapView extends StatefulWidget {
 class _GoogleMapViewState extends State<_GoogleMapView> {
   final Set<Marker> _markers = {};
   GoogleMapController? _controller;
-  LocationModel? _selectedLocation;
-  Marker? _temporaryMarker;
   final Set<Polygon> _polygons = {};
   final Set<Polyline> _polylines = {};
 
   @override
   void initState() {
     super.initState();
+    widget.onCreated(this);
     _loadMarkers();
     _loadZones();
     _loadRoute();
   }
 
-  final String _noLabelsStyle = '''
-[
-  {
-    "featureType": "poi",
-    "stylers": [{"visibility": "off"}]
-  },
-  {
-    "featureType": "transit",
-    "stylers": [{"visibility": "off"}]
-  },
-  {
-    "featureType": "road",
-    "elementType": "labels",
-    "stylers": [{"visibility": "off"}]
-  },
-  {
-    "featureType": "administrative",
-    "elementType": "labels",
-    "stylers": [{"visibility": "off"}]
-  }
-]
-''';
+  final String _noLabelsStyle =
+      '[{"featureType": "poi","stylers":[{"visibility":"off"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"}]}]';
 
-  //disable
-  String? _mapStyleFor(MapStyle style) {
-    if (style == MapStyle.streets) {
-      return _noLabelsStyle;
-    }
-    return null;
-  }
+  String? _mapStyleFor(MapStyle style) =>
+      style == MapStyle.streets ? _noLabelsStyle : null;
 
-  // Load Markers
   Future<void> _loadMarkers() async {
     final Set<Marker> result = {};
-
     for (final m in widget.markers) {
       final icon = await MarkerIconHelper.getIcon(m.category);
-
       result.add(
         Marker(
           markerId: MarkerId(m.name),
           position: LatLng(m.position.lat, m.position.lng),
-          infoWindow: InfoWindow(title: m.name),
           icon: icon,
-          onTap: () {
-            if (!mounted) return;
-            setState(() => _selectedLocation = m);
-          },
+          onTap: () => widget.onLocationSelected(m),
         ),
       );
     }
-
-    if (_temporaryMarker != null) {
-      result.add(_temporaryMarker!);
+    if (mounted) {
+      setState(
+        () => _markers
+          ..clear()
+          ..addAll(result),
+      );
     }
-
-    if (!mounted) return;
-
-    setState(() {
-      _markers
-        ..clear()
-        ..addAll(result);
-    });
   }
 
   Future<void> _loadZones() async {
     final jsonString = await DefaultAssetBundle.of(
       context,
     ).loadString('assets/mock/zones.geojson');
-
     final data = jsonDecode(jsonString);
-
     final List features = data['features'];
-
     final Set<Polygon> polygons = {};
 
     for (final f in features) {
       final name = f['properties']['name'];
       final coords = f['geometry']['coordinates'][0];
-
-      final List<LatLng> points = coords.map<LatLng>((c) {
-        return LatLng(c[1], c[0]); //  lat,lng swap
-      }).toList();
+      final List<LatLng> points = coords
+          .map<LatLng>((c) => LatLng(c[1], c[0]))
+          .toList();
 
       polygons.add(
         Polygon(
@@ -149,195 +122,105 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
           strokeWidth: 2,
           strokeColor: _getColor(name),
           fillColor: _getColor(name).withAlpha(75),
-          consumeTapEvents: true,
-          onTap: () {},
         ),
       );
     }
-
-    setState(() {
-      _polygons.clear();
-      _polygons.addAll(polygons);
-    });
-  }
-
-  void _onMapLongPress(LatLng position) {
-    final temporaryLocation = LocationModel(
-      name: 'Dropped Pin',
-      category: 'temporary',
-      position: AppLatLng(position.latitude, position.longitude),
-      description: 'Temporary pin dropped by long-press.',
+    setState(
+      () => _polygons
+        ..clear()
+        ..addAll(polygons),
     );
-
-    final marker = Marker(
-      markerId: const MarkerId('__temporary_pin__'),
-      position: position,
-      infoWindow: const InfoWindow(title: 'Dropped Pin'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-      onTap: () {
-        if (!mounted) return;
-        setState(() => _selectedLocation = temporaryLocation);
-      },
-    );
-
-    setState(() {
-      _temporaryMarker = marker;
-      _markers.removeWhere((m) => m.markerId.value == '__temporary_pin__');
-      _markers.add(marker);
-      _selectedLocation = temporaryLocation;
-    });
   }
 
   Future<void> _loadRoute() async {
     final jsonString = await DefaultAssetBundle.of(
       context,
     ).loadString('assets/mock/routes.geojson');
-
     final data = jsonDecode(jsonString);
-
     final feature = data['features'][0];
     final coords = feature['geometry']['coordinates'] as List;
-
-    final List<LatLng> points = coords.map<LatLng>((c) {
-      return LatLng(c[1], c[0]);
-    }).toList();
-
-    final polyline = Polyline(
-      polylineId: const PolylineId("route"),
-      points: points,
-      color: Colors.red,
-      width: 2,
-    );
+    final List<LatLng> points = coords
+        .map<LatLng>((c) => LatLng(c[1], c[0]))
+        .toList();
 
     setState(() {
       _polylines.clear();
-      _polylines.add(polyline);
+      _polylines.add(
+        Polyline(
+          polylineId: const PolylineId("route"),
+          points: points,
+          color: Colors.red,
+          width: 2,
+        ),
+      );
     });
   }
 
-  AppLatLng get _userAppLatLng =>
-      AppLatLng(widget.userLocation.latitude, widget.userLocation.longitude);
-
-  // Fly to Kigali
-  Future<void> _flyToKigali() async {
-    const kigali = LatLng(-1.9441, 30.0619);
-
-    await _controller?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        const CameraPosition(target: kigali, zoom: 15),
-      ),
+  void _onMapLongPress(LatLng pos) {
+    final temp = LocationModel(
+      name: 'Dropped Pin',
+      category: 'temporary',
+      position: AppLatLng(pos.latitude, pos.longitude),
+      description: 'Temporary pin dropped.',
     );
+    widget.onLocationSelected(temp);
   }
 
-  //  Tilt
-  Future<void> _tiltCamera() async {
-    await _controller?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: widget.userLocation,
-          zoom: 15,
-          tilt: 60,
-          bearing: 45,
-        ),
+  // Camera Logic
+  void _flyToKigali() => _controller?.animateCamera(
+    CameraUpdate.newCameraPosition(
+      const CameraPosition(target: LatLng(-1.9441, 30.0619), zoom: 15),
+    ),
+  );
+  void _tiltCamera() => _controller?.animateCamera(
+    CameraUpdate.newCameraPosition(
+      CameraPosition(
+        target: widget.userLocation,
+        zoom: 15,
+        tilt: 60,
+        bearing: 45,
       ),
-    );
-  }
-
-  // Reset
-  Future<void> _resetCamera() async {
-    await _controller?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: widget.userLocation,
-          zoom: 13,
-          tilt: 0,
-          bearing: 0,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _goToUserLocation() async {
-    await _controller?.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: widget.userLocation, zoom: 15),
-      ),
-    );
-  }
+    ),
+  );
+  void _resetCamera() => _controller?.animateCamera(
+    CameraUpdate.newCameraPosition(
+      CameraPosition(target: widget.userLocation, zoom: 13),
+    ),
+  );
+  void _goToUserLocation() => _controller?.animateCamera(
+    CameraUpdate.newCameraPosition(
+      CameraPosition(target: widget.userLocation, zoom: 15),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        GoogleMap(
-          key: ValueKey(widget.style),
-          initialCameraPosition: CameraPosition(
-            target: widget.userLocation,
-            zoom: 13,
-          ),
-          myLocationButtonEnabled: false,
-          myLocationEnabled: true,
-          mapType: _mapType(widget.style),
-          markers: _markers,
-          zoomControlsEnabled: false,
-          
-          onLongPress: _onMapLongPress,
-          onMapCreated: (c) => _controller = c,
-          style: _mapStyleFor(widget.style),
-          polygons: _polygons,
-          polylines: _polylines,
-        ),
-        Positioned(
-          bottom: 100,
-          right: 10,
-          child: MapControlsPanel(
-            onFly: _flyToKigali,
-            onTilt: _tiltCamera,
-            onReset: _resetCamera,
-            onLocation: _goToUserLocation,
-          ),
-        ),
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 280),
-          curve: Curves.easeInOut,
-          left: 0,
-          right: 0,
-          bottom: _selectedLocation != null ? 0 : -260,
-          child: _selectedLocation == null
-              ? const SizedBox.shrink()
-              : LocationBottomPanel(
-                  location: _selectedLocation!,
-                  userLocation: _userAppLatLng,
-                  onClose: () => setState(() => _selectedLocation = null),
-                ),
-        ),
-      ],
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: widget.userLocation,
+        zoom: 13,
+      ),
+      myLocationButtonEnabled: false,
+      myLocationEnabled: true,
+      mapType: widget.style == MapStyle.satellite
+          ? MapType.satellite
+          : widget.style == MapStyle.terrain
+          ? MapType.terrain
+          : MapType.normal,
+      markers: _markers,
+      polygons: _polygons,
+      polylines: _polylines,
+      onMapCreated: (c) => _controller = c,
+      onLongPress: _onMapLongPress,
+      style: _mapStyleFor(widget.style),
+      zoomControlsEnabled: false,
     );
   }
 
-  MapType _mapType(MapStyle style) {
-    switch (style) {
-      case MapStyle.satellite:
-        return MapType.satellite;
-      case MapStyle.terrain:
-        return MapType.terrain;
-      case MapStyle.streets:
-        return MapType.normal;
-    }
-  }
-
   Color _getColor(String name) {
-    switch (name) {
-      case "Nyamirambo":
-        return Colors.red;
-      case "Kimihurura":
-        return Colors.blue;
-      case "Remera":
-        return Colors.green;
-      case "Kigali Downtown":
-        return Colors.orange;
-      default:
-        return Colors.grey;
-    }
+    if (name == "Nyamirambo") return Colors.red;
+    if (name == "Kimihurura") return Colors.blue;
+    if (name == "Remera") return Colors.green;
+    return Colors.orange;
   }
 }
