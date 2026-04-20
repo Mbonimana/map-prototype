@@ -15,12 +15,18 @@ class DistanceCalculator {
 
   // formatted string
   String format(AppLatLng a, AppLatLng b) {
-    final distance = calculate(a, b);
+    final meters = _distance.as(
+      LengthUnit.Meter,
+      LatLng(a.lat, a.lng),
+      LatLng(b.lat, b.lng),
+    );
 
-    if (distance < 1) {
-      return "${(distance * 1000).toStringAsFixed(0)} m away";
+    if (meters < 1000) {
+      final display = meters < 1 ? 1 : meters.round();
+      return "$display m away";
     } else {
-      return "${distance.toStringAsFixed(2)} km away";
+      final km = meters / 1000;
+      return "${km.toStringAsFixed(2)} km away";
     }
   }
 }
