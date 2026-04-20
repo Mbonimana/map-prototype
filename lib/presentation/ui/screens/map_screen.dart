@@ -4,6 +4,7 @@ import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/location_bottom_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_control_panel.dart';
+import 'package:map_prototype_app/presentation/ui/widgets/map_view_mode_toggle.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/style_rail.dart';
 
 class MapScreen extends StatefulWidget {
@@ -77,25 +78,15 @@ class _MapScreenState extends State<MapScreen> {
                   ),
           ),
           Positioned(
-            top: 70,
+            top: 650,
             right: 10,
-            child: ToggleButtons(
-              isSelected: [
-                viewMode == MapViewMode.pins,
-                viewMode == MapViewMode.clusters,
-                viewMode == MapViewMode.heatmap,
-              ],
-              onPressed: (index) {
+            child: MapViewModeToggle(
+              selected: viewMode,
+              onChanged: (mode) {
                 setState(() {
-                  viewMode = MapViewMode.values[index];
+                  viewMode = mode;
                 });
               },
-              borderRadius: BorderRadius.circular(12),
-              children: const [
-                Icon(Icons.place),
-                Icon(Icons.scatter_plot),
-                Icon(Icons.whatshot),
-              ],
             ),
           ),
         ],
