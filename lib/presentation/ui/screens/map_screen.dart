@@ -25,6 +25,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   MapStyle style = MapStyle.streets;
   LocationModel? _selectedLocation;
+  MapViewMode viewMode = MapViewMode.pins;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class _MapScreenState extends State<MapScreen> {
             markers: widget.locations,
             userLocation: widget.startPostion,
             style: style,
+            viewMode: viewMode,
             onLocationSelected: (loc) =>
                 setState(() => _selectedLocation = loc),
           ),
@@ -73,6 +75,28 @@ class _MapScreenState extends State<MapScreen> {
                     userLocation: widget.startPostion,
                     onClose: () => setState(() => _selectedLocation = null),
                   ),
+          ),
+          Positioned(
+            top: 70,
+            right: 10,
+            child: ToggleButtons(
+              isSelected: [
+                viewMode == MapViewMode.pins,
+                viewMode == MapViewMode.clusters,
+                viewMode == MapViewMode.heatmap,
+              ],
+              onPressed: (index) {
+                setState(() {
+                  viewMode = MapViewMode.values[index];
+                });
+              },
+              borderRadius: BorderRadius.circular(12),
+              children: const [
+                Icon(Icons.place),
+                Icon(Icons.scatter_plot),
+                Icon(Icons.whatshot),
+              ],
+            ),
           ),
         ],
       ),
