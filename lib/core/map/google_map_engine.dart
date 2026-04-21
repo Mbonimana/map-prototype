@@ -11,6 +11,7 @@ import 'package:map_prototype_app/core/map/map_engine.dart';
 import 'package:map_prototype_app/core/utils/goole_marker_icon_helper.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
+import 'package:map_prototype_app/presentation/providers/heatmap_tile_provider.dart';
 
 class GoogleMapEngine implements MapEngine {
   _GoogleMapViewState? _state;
@@ -81,6 +82,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
 
   double _currentZoom = 13;
   double? _lastClusterZoom;
+  Set<TileOverlay> _tileOverlays = {};
 
   @override
   void initState() {
@@ -114,9 +116,29 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
         break;
 
       case MapViewMode.heatmap:
-        // future implementation
+        await _loadHeatmap(widget.markers);
         break;
     }
+  }
+
+  Future<void> _loadHeatmap(List<LocationModel> markers) async {
+    final provider = AdvancedHeatmapTileProvider(
+      locations: markers,
+      baseKernelSize: 60,
+      intensity: 1.3,
+    );
+
+    final overlay = TileOverlay(
+      tileOverlayId: const TileOverlayId("heatmap_layer"),
+      tileProvider: provider,
+      transparency: 0.2,
+      fadeIn: true,
+    );
+
+    setState(() {
+      _tileOverlays = {overlay};
+      _markers.clear();
+    });
   }
 
   Future<void> _loadNormalMarkers() async {
@@ -251,9 +273,9 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
     await _loadClusterMarkers();
   }
 
-  // -----------------------------
-  // CLUSTER ICON DESIGN
-  // -----------------------------
+  
+  // cluster icon
+
   Future<Uint8List> _buildClusterIcon(int count) async {
     final recorder = PictureRecorder();
     final canvas = Canvas(recorder);
@@ -446,6 +468,7 @@ class _GoogleMapViewState extends State<_GoogleMapView> {
       onCameraIdle: _refreshClustersOnIdle,
       onLongPress: _onMapLongPress,
       style: _mapStyleFor(widget.style),
+      tileOverlays: _tileOverlays,
       mapType: widget.style == MapStyle.satellite
           ? MapType.satellite
           : widget.style == MapStyle.terrain

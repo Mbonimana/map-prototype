@@ -119,6 +119,8 @@ class _MapboxViewState extends State<_MapboxView> {
         break;
       case MapViewMode.heatmap:
         await _clearAllAnnotations();
+        await _addHeatmapSource();
+        await _addHeatmapLayer();
         break;
     }
   }
@@ -188,6 +190,62 @@ class _MapboxViewState extends State<_MapboxView> {
     }
 
     return clusters;
+  }
+
+  //heat map
+
+  Future<void> _addHeatmapSource() async {
+    final features = widget.markers.map((m) {
+      final w = (m.weight ?? 1.0);
+
+      double normalized;
+
+      if (w < 3) {
+        normalized = w / 3 * 0.3; // green range
+      } else if (w < 7) {
+        normalized = 0.3 + ((w - 3) / 4) * 0.4; // yellow range
+      } else {
+        normalized = 0.7 + ((w - 7) / 3) * 0.3; // red range
+      }
+
+      return {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [m.position.lng, m.position.lat],
+        },
+        "properties": {"weight": normalized.clamp(0.0, 1.0)},
+      };
+    }).toList();
+
+    final geojson = {"type": "FeatureCollection", "features": features};
+
+    await mapboxMap?.style.addSource(
+      mapbox.GeoJsonSource(id: "heatmap-source", data: jsonEncode(geojson)),
+    );
+  }
+
+  // heat map layer
+  Future<void> _addHeatmapLayer() async {
+    await mapboxMap?.style.addLayer(
+      mapbox.HeatmapLayer(
+        id: "heatmap-layer",
+        sourceId: "heatmap-source",
+
+        //  intensity based on zoom
+        heatmapIntensity: 1.5,
+
+        // size of influence
+        heatmapRadius: 30,
+
+        //  smoothness
+        heatmapOpacity: 0.9,
+
+        //  weight from your data
+        heatmapWeight:1.0
+      
+      ),
+    );
   }
 
   Future<void> _addClusterMarkers({bool force = false}) async {
