@@ -196,13 +196,25 @@ class _MapboxViewState extends State<_MapboxView> {
 
   Future<void> _addHeatmapSource() async {
     final features = widget.markers.map((m) {
+      final w = (m.weight ?? 1.0);
+
+      double normalized;
+
+      if (w < 3) {
+        normalized = w / 3 * 0.3; // green range
+      } else if (w < 7) {
+        normalized = 0.3 + ((w - 3) / 4) * 0.4; // yellow range
+      } else {
+        normalized = 0.7 + ((w - 7) / 3) * 0.3; // red range
+      }
+
       return {
         "type": "Feature",
         "geometry": {
           "type": "Point",
           "coordinates": [m.position.lng, m.position.lat],
         },
-        "properties": {"weight": m.weight},
+        "properties": {"weight": normalized.clamp(0.0, 1.0)},
       };
     }).toList();
 
@@ -213,7 +225,7 @@ class _MapboxViewState extends State<_MapboxView> {
     );
   }
 
-  //real heat map layer
+  // heat map layer
   Future<void> _addHeatmapLayer() async {
     await mapboxMap?.style.addLayer(
       mapbox.HeatmapLayer(
@@ -227,10 +239,11 @@ class _MapboxViewState extends State<_MapboxView> {
         heatmapRadius: 30,
 
         //  smoothness
-        heatmapOpacity: 0.85,
+        heatmapOpacity: 0.9,
 
         //  weight from your data
-        heatmapWeight: 1.0,
+        heatmapWeight:1.0
+      
       ),
     );
   }

@@ -13,7 +13,7 @@ class LocationModel {
     required this.category,
     required this.position,
     this.description,
-    this.weight = 0.3,
+    this.weight,
   });
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class LocationModel {
       category: json['properties']['category'],
       position: GeoJsonConverter.toLatLng(json['geometry']['coordinates']),
       description: json['properties']['description'],
-      weight: (json['properties']['weight'] ?? 0.3).toDouble(),
+      weight: (json['properties']['weight']).toDouble(),
     );
   }
 
