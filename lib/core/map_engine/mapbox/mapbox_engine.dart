@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:map_prototype_app/core/map/map_box_view.dart';
-import 'package:map_prototype_app/core/map/map_engine.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/map_box_view.dart';
+import 'package:map_prototype_app/core/map_engine/map_engine.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 

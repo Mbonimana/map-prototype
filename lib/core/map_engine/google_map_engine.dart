@@ -7,7 +7,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:latlong2/latlong.dart' as geo;
-import 'package:map_prototype_app/core/map/map_engine.dart';
+import 'package:map_prototype_app/core/map_engine/map_engine.dart';
 import 'package:map_prototype_app/core/utils/goole_marker_icon_helper.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';

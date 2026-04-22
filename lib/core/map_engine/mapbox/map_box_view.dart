@@ -1,14 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as geo;
-import 'package:map_prototype_app/core/map/map_engine.dart';
-import 'package:map_prototype_app/core/map/mapbox/controllers/camera_controller.dart';
-import 'package:map_prototype_app/core/map/mapbox/features/clustering/cluster_icon_builder.dart';
-import 'package:map_prototype_app/core/map/mapbox/features/clustering/cluster_service.dart';
-import 'package:map_prototype_app/core/map/mapbox/features/heatmap/heat_map_layer.dart';
-import 'package:map_prototype_app/core/map/mapbox/features/heatmap/heat_map_source.dart';
-import 'package:map_prototype_app/core/map/mapbox/routes/route_renderer.dart';
-import 'package:map_prototype_app/core/map/mapbox/zones/zone_renderer.dart';
+import 'package:map_prototype_app/core/map_engine/map_engine.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/controllers/camera_controller.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/features/clustering/cluster_icon_builder.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/features/clustering/cluster_service.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/features/heatmap/heat_map_layer.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/features/heatmap/heat_map_source.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/routes/route_renderer.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/zones/zone_renderer.dart';
 import 'package:map_prototype_app/core/utils/asset_loader.dart';
 import 'package:map_prototype_app/core/utils/mapbox_marker_icon_helper.dart';
 import 'package:map_prototype_app/core/utils/styel_cleaner.dart';

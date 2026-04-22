@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:map_prototype_app/core/config/env_config.dart';
-import 'package:map_prototype_app/core/map/google_map_engine.dart';
-import 'package:map_prototype_app/core/map/mapbox_engine.dart';
+import 'package:map_prototype_app/core/map_engine/google_map_engine.dart';
+import 'package:map_prototype_app/core/map_engine/mapbox/mapbox_engine.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 import 'package:map_prototype_app/data/services/geojson_services.dart';
