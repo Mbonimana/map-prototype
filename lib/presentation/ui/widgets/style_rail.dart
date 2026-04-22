@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:map_prototype_app/core/map/map_engine.dart';
+import 'package:map_prototype_app/core/map_engine/map_engine.dart';
 
 class StyleLayerSelector extends StatelessWidget {
   final MapStyle selected;
