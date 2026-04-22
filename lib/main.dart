@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final engine = index == 0 ? GoogleMapEngine() : MapboxMapEngine();
+    final isMapboxEngine = index == 1;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -76,6 +77,7 @@ class _MyAppState extends State<MyApp> {
               engine: engine,
               locations: locations,
               startPostion: userLocation,
+              isMapboxEngine: isMapboxEngine,
             ),
             bottomNavigationBar: EngineToggle(
               index: index,
