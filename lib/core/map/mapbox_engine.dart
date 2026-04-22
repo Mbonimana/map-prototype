@@ -196,17 +196,7 @@ class _MapboxViewState extends State<_MapboxView> {
 
   Future<void> _addHeatmapSource() async {
     final features = widget.markers.map((m) {
-      final w = (m.weight ?? 1.0);
-
-      double normalized;
-
-      if (w < 3) {
-        normalized = w / 3 * 0.3; // green range
-      } else if (w < 7) {
-        normalized = 0.3 + ((w - 3) / 4) * 0.4; // yellow range
-      } else {
-        normalized = 0.7 + ((w - 7) / 3) * 0.3; // red range
-      }
+      final w = (m.weight ?? 0.0).clamp(0.0, 1.0);
 
       return {
         "type": "Feature",
@@ -214,7 +204,7 @@ class _MapboxViewState extends State<_MapboxView> {
           "type": "Point",
           "coordinates": [m.position.lng, m.position.lat],
         },
-        "properties": {"weight": normalized.clamp(0.0, 1.0)},
+        "properties": {"weight": w},
       };
     }).toList();
 
@@ -232,8 +222,18 @@ class _MapboxViewState extends State<_MapboxView> {
         id: "heatmap-layer",
         sourceId: "heatmap-source",
 
-        //  intensity based on zoom
-        heatmapIntensity: 1.5,
+        // Increase intensity as user zooms in so high-weight points stand out.
+        heatmapIntensityExpression: [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          1.0,
+          14,
+          2.0,
+          17,
+          3.0,
+        ],
 
         // size of influence
         heatmapRadius: 30,
@@ -241,9 +241,34 @@ class _MapboxViewState extends State<_MapboxView> {
         //  smoothness
         heatmapOpacity: 0.9,
 
-        //  weight from your data
-        heatmapWeight:1.0
-      
+        // Read per-feature weight directly from GeoJSON (0..1).
+        heatmapWeightExpression: [
+          "coalesce",
+          [
+            "to-number",
+            ["get", "weight"],
+          ],
+          0.0,
+        ],
+
+        // Explicit color ramp so stronger density appears yellow/red sooner.
+        heatmapColorExpression: [
+          "interpolate",
+          ["linear"],
+          ["heatmap-density"],
+          0.00,
+          "rgba(0, 0, 0, 0)",
+          0.20,
+          "rgba(0, 176, 255, 0.7)",
+          0.40,
+          "rgba(0, 255, 128, 0.8)",
+          0.60,
+          "rgba(255, 214, 0, 0.9)",
+          0.80,
+          "rgba(255, 140, 0, 0.95)",
+          1.00,
+          "rgba(255, 0, 0, 1.0)",
+        ],
       ),
     );
   }
