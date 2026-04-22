@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:map_prototype_app/core/map_engine/map_engine.dart';
 import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
+import 'package:map_prototype_app/presentation/ui/screens/offline_maps_settings_screen.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/location_bottom_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_control_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_view_mode_toggle.dart';
@@ -11,12 +12,14 @@ class MapScreen extends StatefulWidget {
   final MapEngine engine;
   final List<LocationModel> locations;
   final AppLatLng startPostion;
+  final bool isMapboxEngine;
 
   const MapScreen({
     super.key,
     required this.engine,
     required this.locations,
     required this.startPostion,
+    required this.isMapboxEngine,
   });
 
   @override
@@ -49,6 +52,32 @@ class _MapScreenState extends State<MapScreen> {
             child: StyleLayerSelector(
               selected: style,
               onChanged: (s) => setState(() => style = s),
+            ),
+          ),
+
+          Positioned(
+            top: 120,
+            right: 12,
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              elevation: 3,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => OfflineMapsSettingsScreen(
+                        isMapboxEngine: widget.isMapboxEngine,
+                      ),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Icon(Icons.settings, color: Colors.blue),
+                ),
+              ),
             ),
           ),
 
