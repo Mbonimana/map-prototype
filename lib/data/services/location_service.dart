@@ -24,9 +24,17 @@ class LocationService {
     }
 
     return await Geolocator.getCurrentPosition(
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
+    );
+  }
+
+  static Stream<Position> getPositionStream() {
+    return Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
+        distanceFilter: 1,
       ),
     );
   }
+  
 }
