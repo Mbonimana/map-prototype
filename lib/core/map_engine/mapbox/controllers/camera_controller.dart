@@ -56,4 +56,14 @@ class CameraController {
       mapbox.MapAnimationOptions(duration: 1000),
     );
   }
+
+  void flyToPosition(AppLatLng pos) {
+    map.flyTo(
+      mapbox.CameraOptions(
+        center: mapbox.Point(coordinates: mapbox.Position(pos.lng, pos.lat)),
+        zoom: 15,
+      ),
+      mapbox.MapAnimationOptions(duration: 800),
+    );
+  }
 }
