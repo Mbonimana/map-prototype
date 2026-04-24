@@ -436,6 +436,25 @@
             }
         },
         {
+  "type": "Feature",
+  "properties": {
+    "name": "RwBuild Work Space ",
+    "category": "zone"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [30.0695653, -1.9583490],
+        [30.0696247, -1.9583490],
+        [30.0696247, -1.9583075],
+        [30.0695653, -1.9583075],
+        [30.0695653, -1.9583490]
+      ]
+    ]
+  }
+},
+        {
             "type": "Feature",
             "properties": {
                 "name": "Kigali Downtown",
