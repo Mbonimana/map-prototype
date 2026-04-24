@@ -20,5 +20,5 @@ abstract class MapEngine {
   void tiltCamera();
   void resetCamera();
   void goToUserLocation();
-  void flyTo(AppLatLng position);
+  void flyToZone(AppLatLng position);
 }
