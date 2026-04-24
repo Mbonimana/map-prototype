@@ -9,6 +9,7 @@ import 'package:map_prototype_app/data/model/zone_model.dart';
 import 'package:map_prototype_app/data/services/geofence_service.dart';
 import 'package:map_prototype_app/data/services/location_service.dart';
 import 'package:map_prototype_app/presentation/ui/screens/offline_maps_settings_screen.dart';
+import 'package:map_prototype_app/presentation/ui/screens/simulated_geofence_screen.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/location_bottom_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_control_panel.dart';
 import 'package:map_prototype_app/presentation/ui/widgets/map_view_mode_toggle.dart';
@@ -67,13 +68,11 @@ class _MapScreenState extends State<MapScreen> {
       ..clear()
       ..addAll(zones);
 
-    _geofenceService.seedState(
-      position: widget.startPostion,
-      zones: _zones,
-    );
+    _geofenceService.seedState(position: widget.startPostion, zones: _zones);
 
-    _positionSubscription =
-        LocationService.getPositionStream().listen((position) {
+    _positionSubscription = LocationService.getPositionStream().listen((
+      position,
+    ) {
       final transition = _geofenceService.evaluatePosition(
         position: AppLatLng(position.latitude, position.longitude),
         zones: _zones,
@@ -129,10 +128,7 @@ class _MapScreenState extends State<MapScreen> {
             top: 100,
             left: 16,
             right: 16,
-            child: ZoneToaster(
-              message: _zoneMessage,
-              state: _zoneState,
-            ),
+            child: ZoneToaster(message: _zoneMessage, state: _zoneState),
           ),
 
           // setting button
@@ -161,8 +157,28 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ),
           ),
+          Positioned(
+            top: 120,
+            left: 12,
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              elevation: 3,
+              child: IconButton(
+                icon: const Icon(Icons.nature_people, color: Colors.blue),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          GeofenceSimulationScreen(engine: widget.engine),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
 
-          /// MAP CONTROLS
+          //camera controlls
           Positioned(
             bottom: 120,
             right: 10,
@@ -186,8 +202,7 @@ class _MapScreenState extends State<MapScreen> {
                 : LocationBottomPanel(
                     location: _selectedLocation!,
                     userLocation: widget.startPostion,
-                    onClose: () =>
-                        setState(() => _selectedLocation = null),
+                    onClose: () => setState(() => _selectedLocation = null),
                   ),
           ),
 
@@ -209,3 +224,14 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 }
+
+/*
+Nyamirambo:  Enter(button), Leave(button),
+Kimihurura: Enter(button), Leave(button)
+Remera: Enter(button), Leave(button)
+RwBuild: Enter(button), Leave(button)
+Kigali Downtown: Enter(button), Leave(button)
+
+
+
+*/
