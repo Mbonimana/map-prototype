@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:map_prototype_app/core/utils/storage_calculator.dart';
+import 'package:map_prototype_app/core/utils/storage_converter.dart';
 import 'package:map_prototype_app/data/model/offline_map_state.dart';
 import 'package:map_prototype_app/data/services/mapbox_offline_service.dart';
 
@@ -21,7 +21,7 @@ class _OfflineMapsSettingsScreenState
     extends State<OfflineMapsSettingsScreen> {
   final MapboxOfflineService _service = MapboxOfflineService();
   StreamSubscription<OfflineMapState>? _subscription;
-  final StorageCalculator _storageCalculator = StorageCalculator();
+  final StorageConverter _storageConverter = StorageConverter();
 
   final Color primaryBlue = const Color(0xFF1994ff);
 
@@ -143,7 +143,7 @@ class _OfflineMapsSettingsScreenState
                       icon: Icons.storage,
                       iconColor: primaryBlue,
                       title: 'Storage',
-                      value: _storageCalculator.formatBytes(_state.storageBytes),
+                      value: _storageConverter.formatBytes(_state.storageBytes),
                     ),
 
                     const SizedBox(height: 16),
