@@ -7,11 +7,7 @@ class ZoneToaster extends StatefulWidget {
   final String? message;
   final ZoneUiState state;
 
-  const ZoneToaster({
-    super.key,
-    required this.message,
-    required this.state,
-  });
+  const ZoneToaster({super.key, required this.message, required this.state});
 
   @override
   State<ZoneToaster> createState() => _ZoneToasterState();
