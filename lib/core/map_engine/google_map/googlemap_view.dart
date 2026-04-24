@@ -206,7 +206,7 @@ class GoogleMapViewState extends State<GoogleMapView> {
 
   void flyToLocation(AppLatLng pos) {
     if (_controller == null) return;
-    CameraController(_controller!, widget.userLocation).flyTo(pos);
+    CameraController(_controller!, widget.userLocation).flyToZone(pos);
   }
 
   void tiltCamera() {
