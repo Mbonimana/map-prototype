@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:map_prototype_app/core/utils/storage_calculator.dart';
 import 'package:map_prototype_app/data/model/offline_map_state.dart';
 import 'package:map_prototype_app/data/services/mapbox_offline_service.dart';
 
@@ -20,6 +21,7 @@ class _OfflineMapsSettingsScreenState
     extends State<OfflineMapsSettingsScreen> {
   final MapboxOfflineService _service = MapboxOfflineService();
   StreamSubscription<OfflineMapState>? _subscription;
+  final StorageCalculator _storageCalculator = StorageCalculator();
 
   final Color primaryBlue = const Color(0xFF1994ff);
 
@@ -112,7 +114,7 @@ class _OfflineMapsSettingsScreenState
                   boxShadow: [
                     BoxShadow(
                       blurRadius: 12,
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       offset: const Offset(0, 4),
                     )
                   ],
@@ -141,7 +143,7 @@ class _OfflineMapsSettingsScreenState
                       icon: Icons.storage,
                       iconColor: primaryBlue,
                       title: 'Storage',
-                      value: _formatBytes(_state.storageBytes),
+                      value: _storageCalculator.formatBytes(_state.storageBytes),
                     ),
 
                     const SizedBox(height: 16),
@@ -281,19 +283,4 @@ class _OfflineMapsSettingsScreenState
     );
   }
 
-  String _formatBytes(int bytes) {
-    if (bytes <= 0) return '0 B';
-
-    const units = ['B', 'KB', 'MB', 'GB'];
-    double value = bytes.toDouble();
-    int unit = 0;
-
-    while (value >= 1024 && unit < units.length - 1) {
-      value /= 1024;
-      unit++;
-    }
-
-    final digits = unit == 0 ? 0 : 2;
-    return '${value.toStringAsFixed(digits)} ${units[unit]}';
-  }
 }
