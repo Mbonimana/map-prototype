@@ -15,7 +15,6 @@ class RouteRenderer {
         mapbox.GeoJsonSource(id: "route-src", data: geojson),
       );
 
-    
       await map.style.addLayer(
         mapbox.LineLayer(
           id: "route-layer",
@@ -23,7 +22,7 @@ class RouteRenderer {
           filter: [
             "==",
             ["geometry-type"],
-            "LineString"
+            "LineString",
           ],
           lineColor: Colors.blue.value,
           lineWidth: 2.0,
@@ -39,14 +38,14 @@ class RouteRenderer {
           filter: [
             "==",
             ["geometry-type"],
-            "Point"
+            "Point",
           ],
-          textField: "{name}", 
+          textField: "{name}",
           textSize: 12.0,
           textColor: Colors.black.value,
-          textHaloColor: Colors.white.value, 
+          textHaloColor: Colors.white.value,
           textHaloWidth: 1.0,
-          textOffset: [0, 1.2], 
+          textOffset: [0, 1.2],
           textAnchor: mapbox.TextAnchor.TOP,
         ),
       );
@@ -59,7 +58,7 @@ class RouteRenderer {
           filter: [
             "==",
             ["geometry-type"],
-            "Point"
+            "Point",
           ],
           circleRadius: 4.0,
           circleColor: Colors.white.value,
@@ -67,7 +66,6 @@ class RouteRenderer {
           circleStrokeColor: Colors.blue.value,
         ),
       );
-
     } catch (e) {
       debugPrint("Error loading map layers: $e");
     }
