@@ -165,7 +165,7 @@ class _MapScreenState extends State<MapScreen> {
               borderRadius: BorderRadius.circular(12),
               elevation: 3,
               child: IconButton(
-                icon: const Icon(Icons.nature_people, color: Colors.blue),
+                icon: const Icon(Icons.golf_course, color: Colors.blue),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
