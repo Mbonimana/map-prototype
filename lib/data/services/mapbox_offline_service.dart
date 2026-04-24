@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:map_prototype_app/data/model/offline_map_state.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:talker/talker.dart';
+
 final Talker _talker = Talker();
 
 class MapboxOfflineService {
@@ -22,7 +23,6 @@ class MapboxOfflineService {
   OfflineMapState get state => _state;
 
   Future<void> refresh() async {
-    
     final tileStore = await mapbox.TileStore.createDefault();
     final offlineManager = await mapbox.OfflineManager.create();
 
@@ -33,10 +33,7 @@ class MapboxOfflineService {
     final storageBytes = _storageBytes(regions, packs);
 
     _emit(
-      _state.copyWith(
-        hasOfflineRegion: hasRegion,
-        storageBytes: storageBytes,
-      ),
+      _state.copyWith(hasOfflineRegion: hasRegion, storageBytes: storageBytes),
     );
   }
 
@@ -102,9 +99,10 @@ class MapboxOfflineService {
 
         _emit(
           _state.copyWith(
-            progress: ((styles.length / (styles.length + 1)) +
-                    (ratio * (1 / (styles.length + 1))))
-                .clamp(0.0, 1.0),
+            progress:
+                ((styles.length / (styles.length + 1)) +
+                        (ratio * (1 / (styles.length + 1))))
+                    .clamp(0.0, 1.0),
             phase: 'Downloading Kigali tiles',
           ),
         );
@@ -132,15 +130,11 @@ class MapboxOfflineService {
       );
     }
   }
+
   Future<void> deleteKigaliRegion() async {
     if (_state.isDownloading) return;
 
-    _emit(
-      _state.copyWith(
-        phase: 'Deleting offline data',
-        clearError: true,
-      ),
-    );
+    _emit(_state.copyWith(phase: 'Deleting offline data', clearError: true));
 
     try {
       final tileStore = await mapbox.TileStore.createDefault();
@@ -191,7 +185,6 @@ class MapboxOfflineService {
       );
     }
   }
-
 
   Future<void> dispose() async {
     await _controller.close();
