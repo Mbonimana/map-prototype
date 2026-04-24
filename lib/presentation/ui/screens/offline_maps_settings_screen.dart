@@ -7,18 +7,14 @@ import 'package:map_prototype_app/data/services/mapbox_offline_service.dart';
 class OfflineMapsSettingsScreen extends StatefulWidget {
   final bool isMapboxEngine;
 
-  const OfflineMapsSettingsScreen({
-    super.key,
-    required this.isMapboxEngine,
-  });
+  const OfflineMapsSettingsScreen({super.key, required this.isMapboxEngine});
 
   @override
   State<OfflineMapsSettingsScreen> createState() =>
       _OfflineMapsSettingsScreenState();
 }
 
-class _OfflineMapsSettingsScreenState
-    extends State<OfflineMapsSettingsScreen> {
+class _OfflineMapsSettingsScreenState extends State<OfflineMapsSettingsScreen> {
   final MapboxOfflineService _service = MapboxOfflineService();
   StreamSubscription<OfflineMapState>? _subscription;
   final StorageConverter _storageConverter = StorageConverter();
@@ -67,7 +63,6 @@ class _OfflineMapsSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
-    
     double progressValue;
     if (_state.isDownloading) {
       progressValue = _state.progress;
@@ -77,7 +72,6 @@ class _OfflineMapsSettingsScreenState
       progressValue = 0.0;
     }
 
-      
     String phaseText;
     if (_state.isDownloading) {
       phaseText = _state.phase;
@@ -101,9 +95,7 @@ class _OfflineMapsSettingsScreenState
         ),
       ),
       body: _isBusy
-          ? Center(
-              child: CircularProgressIndicator(color: primaryBlue),
-            )
+          ? Center(child: CircularProgressIndicator(color: primaryBlue))
           : Padding(
               padding: const EdgeInsets.all(16),
               child: Container(
@@ -116,7 +108,7 @@ class _OfflineMapsSettingsScreenState
                       blurRadius: 12,
                       color: Colors.black.withValues(alpha: 0.05),
                       offset: const Offset(0, 4),
-                    )
+                    ),
                   ],
                 ),
                 child: Column(
@@ -148,7 +140,7 @@ class _OfflineMapsSettingsScreenState
 
                     const SizedBox(height: 16),
 
-                    /// PROGRESS BAR 
+                    /// PROGRESS BAR
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: LinearProgressIndicator(
@@ -165,15 +157,10 @@ class _OfflineMapsSettingsScreenState
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          phaseText,
-                          style: const TextStyle(fontSize: 13),
-                        ),
+                        Text(phaseText, style: const TextStyle(fontSize: 13)),
                         Text(
                           '$percent%',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: const TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -186,8 +173,11 @@ class _OfflineMapsSettingsScreenState
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
                           children: [
-                            const Icon(Icons.error_outline,
-                                color: Colors.red, size: 18),
+                            const Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                              size: 18,
+                            ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
@@ -215,8 +205,7 @@ class _OfflineMapsSettingsScreenState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed:
-                              _state.isDownloading ? null : _download,
+                          onPressed: _state.isDownloading ? null : _download,
                           child: Text(
                             _state.hasOfflineRegion
                                 ? 'Update Download'
@@ -228,8 +217,7 @@ class _OfflineMapsSettingsScreenState
                       SizedBox(
                         width: double.infinity,
                         child: TextButton(
-                          onPressed:
-                              _state.isDownloading ? null : _delete,
+                          onPressed: _state.isDownloading ? null : _delete,
                           child: const Text(
                             'Delete Region',
                             style: TextStyle(color: Colors.black),
@@ -267,20 +255,9 @@ class _OfflineMapsSettingsScreenState
       children: [
         Icon(icon, size: 20, color: iconColor),
         const SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 14),
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        Expanded(child: Text(title, style: const TextStyle(fontSize: 14))),
+        Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
       ],
     );
   }
-
 }
