@@ -50,12 +50,12 @@ class GeofenceService {
         type: GeofenceTransitionType.exited,
       );
     }
-     if (currentInside.isNotEmpty) {
-    return GeofenceTransition(
-      zoneName: currentInside.first,
-      type: GeofenceTransitionType.current,
-    );
-  }
+    if (currentInside.isNotEmpty) {
+      return GeofenceTransition(
+        zoneName: currentInside.first,
+        type: GeofenceTransitionType.current,
+      );
+    }
 
     return null;
   }
