@@ -14,6 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   MapboxOptions.setAccessToken(EnvConfig.mapBoxToken);
+  await LocationService.start();
 
   runApp(const MyApp());
 }
