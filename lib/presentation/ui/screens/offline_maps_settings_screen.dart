@@ -148,7 +148,7 @@ class _OfflineMapsSettingsScreenState
 
                     const SizedBox(height: 16),
 
-                    /// PROGRESS BAR (FIXED)
+                    /// PROGRESS BAR 
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: LinearProgressIndicator(
