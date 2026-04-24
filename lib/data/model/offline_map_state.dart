@@ -1,7 +1,4 @@
-enum OfflineCapability {
-  managedDownload,
-  cacheOnly,
-}
+enum OfflineCapability { managedDownload, cacheOnly }
 
 class OfflineMapState {
   final bool isDownloading;
