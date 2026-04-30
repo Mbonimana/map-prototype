@@ -15,7 +15,12 @@ if (keysFile.exists()) {
     keysProperties.load(keysFile.inputStream())
 }
 
-//  Function to decode --dart-define values
+/**
+ * Retrieve the value for a named `--dart-define` from the Gradle `dart-defines` property.
+ *
+ * @param key The name of the define to look up.
+ * @return The define's value if present, or an empty string otherwise.
+ */
 fun getDartDefine(key: String): String {
     val dartDefines = project.findProperty("dart-defines") as String? ?: return ""
 
