@@ -9,7 +9,7 @@ import 'package:map_prototype_app/presentation/ui/widgets/style_rail.dart';
 
 class MapScreen extends StatefulWidget {
   final MapEngine engine;
-  final List<LocationModel> locations;
+  final List<LocationModel> locations
   final AppLatLng startPostion;
 
   const MapScreen({
@@ -64,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
 
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 280),
+            duration:  Duration(milliseconds: 280),
             curve: Curves.easeInOut,
             left: 0,
             right: 0,
