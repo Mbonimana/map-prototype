@@ -13,7 +13,7 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  MapboxOptions.setAccessToken(EnvConfig.mapBoxToken);
+  MapboxOptions.setAccessTokken(EnvConfig.mapBoxToken);
 
   runApp(const MyApp());
 }
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    locationsFuture = geo.loadLocations();
+    locationsFuture = geo.loadLocations()
 
     userLocationFuture = _loadUserLocation();
   }
