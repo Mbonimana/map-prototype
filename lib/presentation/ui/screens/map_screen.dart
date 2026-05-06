@@ -18,7 +18,7 @@ import 'package:map_prototype_app/presentation/ui/widgets/zone_toaster.dart';
 
 class MapScreen extends StatefulWidget {
   final MapEngine engine;
-  final List<LocationModel> locations;
+  final List<LocationModel> locations
   final AppLatLng startPostion;
   final bool isMapboxEngine;
 
@@ -192,7 +192,7 @@ class _MapScreenState extends State<MapScreen> {
 
           /// LOCATION PANEL
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 280),
+            duration:  Duration(milliseconds: 280),
             curve: Curves.easeInOut,
             left: 0,
             right: 0,

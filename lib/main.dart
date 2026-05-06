@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    locationsFuture = geo.loadLocations();
+    locationsFuture = geo.loadLocations()
 
     userLocationFuture = _loadUserLocation();
   }
