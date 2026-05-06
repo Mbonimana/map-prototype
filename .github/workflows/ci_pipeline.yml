@@ -91,49 +91,49 @@ jobs:
           path: build/app/outputs/flutter-apk/app-${{ env.ENV }}.apk
 
 
-  build-ios:
-    name: Build iOS App Bundle
-    runs-on: macos-latest
-    needs: test
-    steps:
-      - uses: actions/checkout@v3
+  # build-ios:
+  #   name: Build iOS App Bundle
+  #   runs-on: macos-latest
+  #   needs: test
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.41.9'
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: '3.41.9'
 
-      - name: Validate ENV
-        run: |
-          if [ -z "$ENV" ]; then
-            echo "ENV is missing"
-            exit 1
-          fi
+  #     - name: Validate ENV
+  #       run: |
+  #         if [ -z "$ENV" ]; then
+  #           echo "ENV is missing"
+  #           exit 1
+  #         fi
 
-      - name: Cache Flutter Pub
-        uses: actions/cache@v3
-        with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-
+  #     - name: Cache Flutter Pub
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.pub-cache
+  #         key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pub-
 
-      - name: Install dependencies
-        run: flutter pub get
+  #     - name: Install dependencies
+  #       run: flutter pub get
 
-      - name: Build iOS with ENV
-        run: |
-          flutter build ios --release --no-codesign \
-            --dart-define=ENV=$ENV \
-            --dart-define=MAPBOXTOKEN=$MAPBOXTOKEN \
-            --dart-define=GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY
+  #     - name: Build iOS with ENV
+  #       run: |
+  #         flutter build ios --release --no-codesign \
+  #           --dart-define=ENV=$ENV \
+  #           --dart-define=MAPBOXTOKEN=$MAPBOXTOKEN \
+  #           --dart-define=GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY
 
-      - name: Rename App Bundle
-        run: |
-          mv build/ios/iphoneos/Runner.app \
-             build/ios/iphoneos/Runner-${ENV}.app
+  #     - name: Rename App Bundle
+  #       run: |
+  #         mv build/ios/iphoneos/Runner.app \
+  #            build/ios/iphoneos/Runner-${ENV}.app
 
-      - name: Upload iOS artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-${{ env.ENV }}.app
-          path: build/ios/iphoneos/Runner-${{ env.ENV }}.app
+  #     - name: Upload iOS artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: app-${{ env.ENV }}.app
+  #         path: build/ios/iphoneos/Runner-${{ env.ENV }}.app
