@@ -30,9 +30,7 @@ class LocationBottomPanel extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(22),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
         boxShadow: [
           BoxShadow(
             color: const Color.fromRGBO(0, 0, 0, 0.12),
@@ -47,13 +45,11 @@ class LocationBottomPanel extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-         
             SizedBox(
               height: 28,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                
                   Align(
                     alignment: Alignment.center,
                     child: Container(
@@ -66,7 +62,7 @@ class LocationBottomPanel extends StatelessWidget {
                     ),
                   ),
 
-                  // Close button 
+                  // Close button
                   Positioned(
                     right: 0,
                     top: -6,
@@ -131,11 +127,7 @@ class LocationBottomPanel extends StatelessWidget {
             // Distance
             Row(
               children: [
-                const Icon(
-                  Icons.location_on,
-                  size: 18,
-                  color: primaryBlue,
-                ),
+                const Icon(Icons.location_on, size: 18, color: primaryBlue),
                 const SizedBox(width: 6),
                 Text(
                   distanceText,

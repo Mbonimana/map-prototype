@@ -43,6 +43,14 @@ class CameraController {
     );
   }
 
+  void flyToZone(AppLatLng pos) {
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(pos.lat, pos.lng), zoom: 15),
+      ),
+    );
+  }
+
   void goToUserLocation() {
     controller.animateCamera(
       CameraUpdate.newCameraPosition(

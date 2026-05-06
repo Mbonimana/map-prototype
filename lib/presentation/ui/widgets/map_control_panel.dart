@@ -26,7 +26,7 @@ class MapControlsPanel extends StatelessWidget {
           icon: Icons.my_location,
           onTap: onLocation,
           primaryBlue: primaryBlue,
-          isPrimary: true, 
+          isPrimary: true,
         ),
         const SizedBox(height: 12),
 

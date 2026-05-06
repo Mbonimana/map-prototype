@@ -13,7 +13,8 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  MapboxOptions.setAccessTokken(EnvConfig.mapBoxToken);
+  MapboxOptions.setAccessToken(EnvConfig.mapBoxToken);
+  await LocationService.start();
 
   runApp(const MyApp());
 }
@@ -50,6 +51,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final engine = index == 0 ? GoogleMapEngine() : MapboxMapEngine();
+    final isMapboxEngine = index == 1;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -76,6 +78,7 @@ class _MyAppState extends State<MyApp> {
               engine: engine,
               locations: locations,
               startPostion: userLocation,
+              isMapboxEngine: isMapboxEngine,
             ),
             bottomNavigationBar: EngineToggle(
               index: index,

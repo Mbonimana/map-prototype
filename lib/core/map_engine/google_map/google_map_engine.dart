@@ -37,4 +37,9 @@ class GoogleMapEngine implements MapEngine {
 
   @override
   void goToUserLocation() => _state?.goToUserLocation();
+
+  @override
+  void flyToZone(AppLatLng position) {
+    _state?.flyToLocation(position);
+  }
 }
