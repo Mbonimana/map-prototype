@@ -1,0 +1,107 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali Route Line",
+                "type": "route"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        30.0447,
+                        -1.9409
+                    ],
+                    [
+                        30.1263,
+                        -1.9496
+                    ],
+                    [
+                        30.0938,
+                        -1.9546
+                    ],
+                    [
+                        30.1045,
+                        -1.9546
+                    ],
+                    [
+                        30.0907,
+                        -1.9443
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Nyabugogo",
+                "type": "stop"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0447,
+                    -1.9409
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kimironko",
+                "type": "stop"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1263,
+                    -1.9496
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kigali Convention Centre (KCC)",
+                "type": "stop"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0938,
+                    -1.9546
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Question Coffee Gishushu",
+                "type": "stop"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.1045,
+                    -1.9546
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Inema Arts Centre",
+                "type": "stop"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    30.0907,
+                    -1.9443
+                ]
+            }
+        }
+    ]
+}

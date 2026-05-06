@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 
-class MapControlsPanel extends StatefulWidget {
+class MapControlsPanel extends StatelessWidget {
   final VoidCallback onFly;
   final VoidCallback onTilt;
   final VoidCallback onReset;
+  final VoidCallback onLocation;
 
   const MapControlsPanel({
     super.key,
     required this.onFly,
     required this.onTilt,
     required this.onReset,
+    required this.onLocation,
   });
 
-  @override
-  State<MapControlsPanel> createState() => _MapControlsPanelState();
-}
-
-class _MapControlsPanelState extends State<MapControlsPanel> {
-  bool _isOpen = false;
-
   final Color primaryBlue = const Color(0xFF1994ff);
-
-  void toggle() => setState(() => _isOpen = !_isOpen);
-  void close() => setState(() => _isOpen = false);
 
   @override
   Widget build(BuildContext context) {
@@ -30,85 +22,34 @@ class _MapControlsPanelState extends State<MapControlsPanel> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        // Sub buttons
-        if (_isOpen) ...[
-          _buildAnimatedButton(
-            icon: Icons.flight_takeoff,
-            onTap: () {
-              widget.onFly();
-              close();
-            },
-            delay: 1,
-          ),
-          const SizedBox(height: 12),
-
-          _buildAnimatedButton(
-            icon: Icons.threed_rotation,
-            onTap: () {
-              widget.onTilt();
-              close();
-            },
-            delay: 2,
-          ),
-          const SizedBox(height: 12),
-
-          _buildAnimatedButton(
-            icon: Icons.refresh,
-            onTap: () {
-              widget.onReset();
-              close();
-            },
-            delay: 3,
-          ),
-          const SizedBox(height: 16),
-        ],
-
-        // view toggle button
-        GestureDetector(
-          onTap: toggle,
-          child: Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: primaryBlue,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: primaryBlue.withAlpha(100),
-                  blurRadius: 18,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: Icon(
-              _isOpen ? Icons.close : Icons.visibility,
-              color: Colors.white,
-              size: 26,
-            ),
-          ),
+        _StyledMiniButton(
+          icon: Icons.my_location,
+          onTap: onLocation,
+          primaryBlue: primaryBlue,
+          isPrimary: true, 
         ),
-      ],
-    );
-  }
+        const SizedBox(height: 12),
 
-  Widget _buildAnimatedButton({
-    required IconData icon,
-    required VoidCallback onTap,
-    required int delay,
-  }) {
-    return AnimatedSlide(
-      offset: _isOpen ? Offset.zero : const Offset(0, 0.4),
-      duration: Duration(milliseconds: 160 + (delay * 40)),
-      curve: Curves.easeOut,
-      child: AnimatedOpacity(
-        opacity: _isOpen ? 1 : 0,
-        duration: const Duration(milliseconds: 180),
-        child: _StyledMiniButton(
-          icon: icon,
-          onTap: onTap,
+        _StyledMiniButton(
+          icon: Icons.flight_takeoff,
+          onTap: onFly,
           primaryBlue: primaryBlue,
         ),
-      ),
+        const SizedBox(height: 12),
+
+        _StyledMiniButton(
+          icon: Icons.threed_rotation,
+          onTap: onTilt,
+          primaryBlue: primaryBlue,
+        ),
+        const SizedBox(height: 12),
+
+        _StyledMiniButton(
+          icon: Icons.refresh,
+          onTap: onReset,
+          primaryBlue: primaryBlue,
+        ),
+      ],
     );
   }
 }
@@ -117,11 +58,13 @@ class _StyledMiniButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
   final Color primaryBlue;
+  final bool isPrimary;
 
   const _StyledMiniButton({
     required this.icon,
     required this.onTap,
     required this.primaryBlue,
+    this.isPrimary = false,
   });
 
   @override
@@ -132,21 +75,27 @@ class _StyledMiniButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          width: 40,
-          height: 40,
+          width: 44, // Slightly larger for better touch targets
+          height: 44,
           decoration: BoxDecoration(
-            color: Colors.white.withAlpha(230),
+            // If it's the primary (location) button, we can give it a blue tint or white
+            color: isPrimary ? Colors.white : Colors.white.withAlpha(230),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.black.withAlpha(12)),
+            border: Border.all(
+              color: isPrimary
+                  ? primaryBlue.withAlpha(80)
+                  : Colors.black.withAlpha(12),
+              width: isPrimary ? 2 : 1,
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withAlpha(25),
+                color: Colors.black.withAlpha(isPrimary ? 40 : 25),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
             ],
           ),
-          child: Icon(icon, size: 22, color: primaryBlue),
+          child: Icon(icon, size: 24, color: primaryBlue),
         ),
       ),
     );

@@ -6,7 +6,8 @@
             "properties": {
                 "name": "Kigali Convention Centre",
                 "category": "landmark",
-                "description": "A major conference and event venue in Kigali."
+                "description": "A major conference and event venue in Kigali.",
+                "weight": 0.3
             },
             "geometry": {
                 "type": "Point",
@@ -21,7 +22,8 @@
             "properties": {
                 "name": "Kigali Genocide Memorial",
                 "category": "landmark",
-                "description": "A memorial site honoring victims of the 1994 genocide againist the Tutsi."
+                "description": "A memorial site honoring victims of the 1994 genocide againist the Tutsi.",
+                "weight": 0.1
             },
             "geometry": {
                 "type": "Point",
@@ -36,7 +38,8 @@
             "properties": {
                 "name": "Kigali City Tower",
                 "category": "landmark",
-                "description": "A prominent commercial and office building in the city center."
+                "description": "A prominent commercial and office building in the city center.",
+                "weight": 0.7
             },
             "geometry": {
                 "type": "Point",
@@ -51,7 +54,8 @@
             "properties": {
                 "name": "Amahoro Stadium",
                 "category": "landmark",
-                "description": "A large stadium used for sports and national events."
+                "description": "A large stadium used for sports and national events.",
+                "weight": 0.5
             },
             "geometry": {
                 "type": "Point",
@@ -66,13 +70,14 @@
             "properties": {
                 "name": "BK Arena",
                 "category": "landmark",
-                "description": "A modern indoor arena for sports and entertainment events."
+                "description": "A modern indoor arena for sports and entertainment events.",
+                "weight": 0.5
             },
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    30.1118,
-                    -1.9543
+                    30.1156,
+                    -1.9531
                 ]
             }
         },
@@ -81,7 +86,8 @@
             "properties": {
                 "name": "Hotel des Mille Collines",
                 "category": "landmark",
-                "description": "A historic hotel known for its role during the genocide."
+                "description": "A historic hotel known for its role during the genocide.",
+                "weight": 0.1
             },
             "geometry": {
                 "type": "Point",
@@ -96,7 +102,8 @@
             "properties": {
                 "name": "Kandt House Museum",
                 "category": "landmark",
-                "description": "A museum showcasing Rwanda’s natural and colonial history."
+                "description": "A museum showcasing Rwanda’s natural and colonial history.",
+                "weight": 0.2
             },
             "geometry": {
                 "type": "Point",
@@ -111,7 +118,8 @@
             "properties": {
                 "name": "Kigali City Hall",
                 "category": "landmark",
-                "description": "Administrative headquarters for Kigali city operations."
+                "description": "Administrative headquarters for Kigali city operations.",
+                "weight": 0.4
             },
             "geometry": {
                 "type": "Point",
@@ -126,7 +134,8 @@
             "properties": {
                 "name": "Indabo Coffee",
                 "category": "business",
-                "description": "A café known for locally sourced Rwandan coffee."
+                "description": "A café known for locally sourced Rwandan coffee.",
+                "weight": 0.1
             },
             "geometry": {
                 "type": "Point",
@@ -141,7 +150,8 @@
             "properties": {
                 "name": "Bourbon Coffee CBD",
                 "category": "business",
-                "description": "A popular coffee shop located in Kigali’s central business district."
+                "description": "A popular coffee shop located in Kigali’s central business district.",
+                "weight": 0.1
             },
             "geometry": {
                 "type": "Point",
@@ -156,7 +166,8 @@
             "properties": {
                 "name": "Inema Arts Centre",
                 "category": "business",
-                "description": "A contemporary art gallery and cultural space."
+                "description": "A contemporary art gallery and cultural space.",
+                "weight": 0.2
             },
             "geometry": {
                 "type": "Point",
@@ -171,7 +182,8 @@
             "properties": {
                 "name": "Kimironko Market",
                 "category": "business",
-                "description": "A busy local market selling fresh produce and goods."
+                "description": "A busy local market selling fresh produce and goods.",
+                "weight": 0.9
             },
             "geometry": {
                 "type": "Point",
@@ -186,7 +198,8 @@
             "properties": {
                 "name": "Simba Supermarket",
                 "category": "business",
-                "description": "A retail supermarket offering groceries and household items."
+                "description": "A retail supermarket offering groceries and household items.",
+                "weight": 0.3
             },
             "geometry": {
                 "type": "Point",
@@ -201,7 +214,8 @@
             "properties": {
                 "name": "Makuza Peace Plaza",
                 "category": "business",
-                "description": "A shopping and office complex in Kigali city center."
+                "description": "A shopping and office complex in Kigali city center.",
+                "weight": 0.6
             },
             "geometry": {
                 "type": "Point",
@@ -216,7 +230,8 @@
             "properties": {
                 "name": "Nyarutarama Sports Club",
                 "category": "business",
-                "description": "A leisure and sports facility with golf and other activities."
+                "description": "A leisure and sports facility with golf and other activities.",
+                "weight": 0.5
             },
             "geometry": {
                 "type": "Point",
@@ -231,7 +246,8 @@
             "properties": {
                 "name": "CHUK Hospital",
                 "category": "service",
-                "description": "A major public referral hospital in Kigali."
+                "description": "A major public referral hospital in Kigali.",
+                "weight": 0.8
             },
             "geometry": {
                 "type": "Point",
@@ -246,7 +262,8 @@
             "properties": {
                 "name": "King Faisal Hospital",
                 "category": "service",
-                "description": "A leading private hospital offering specialized care."
+                "description": "A leading private hospital offering specialized care.",
+                "weight": 0.7
             },
             "geometry": {
                 "type": "Point",
@@ -261,7 +278,8 @@
             "properties": {
                 "name": "University of Rwanda CST",
                 "category": "service",
-                "description": "A campus focused on science and technology education."
+                "description": "A campus focused on science and technology education.",
+                "weight": 0.6
             },
             "geometry": {
                 "type": "Point",
@@ -276,7 +294,8 @@
             "properties": {
                 "name": "Mount Kenya University Kigali",
                 "category": "service",
-                "description": "A private university offering various academic programs."
+                "description": "A private university offering various academic programs.",
+                "weight": 0.4
             },
             "geometry": {
                 "type": "Point",
@@ -291,7 +310,8 @@
             "properties": {
                 "name": "Nyabugogo Bus Terminal",
                 "category": "service",
-                "description": "A central transport hub for buses and taxis."
+                "description": "A central transport hub for buses and taxis.",
+                "weight": 0.9
             },
             "geometry": {
                 "type": "Point",
@@ -306,7 +326,8 @@
             "properties": {
                 "name": "Kigali International Airport",
                 "category": "service",
-                "description": "The main airport serving Kigali and international flights."
+                "description": "The main airport serving Kigali and international flights.",
+                "weight": 0.5
             },
             "geometry": {
                 "type": "Point",
@@ -321,7 +342,8 @@
             "properties": {
                 "name": "MTN Centre Nyarutarama",
                 "category": "service",
-                "description": "A corporate office location for MTN Rwanda."
+                "description": "A corporate office location for MTN Rwanda.",
+                "weight": 0.3
             },
             "geometry": {
                 "type": "Point",
@@ -336,7 +358,8 @@
             "properties": {
                 "name": "Bank of Kigali HQ",
                 "category": "service",
-                "description": "Headquarters of Bank of Kigali."
+                "description": "Headquarters of Bank of Kigali.",
+                "weight": 0.4
             },
             "geometry": {
                 "type": "Point",
@@ -351,7 +374,8 @@
             "properties": {
                 "name": "Equity Bank Kigali",
                 "category": "service",
-                "description": "A branch of Equity Bank offering financial services."
+                "description": "A branch of Equity Bank offering financial services.",
+                "weight": 0.3
             },
             "geometry": {
                 "type": "Point",
@@ -366,7 +390,8 @@
             "properties": {
                 "name": "Rwanda Revenue Authority",
                 "category": "service",
-                "description": "Government agency responsible for tax collection."
+                "description": "Government agency responsible for tax collection.",
+                "weight": 0.4
             },
             "geometry": {
                 "type": "Point",

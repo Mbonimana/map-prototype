@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="map_prototype_app"
+        android:label="Map Prototype"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data
     android:name="com.google.android.geo.API_KEY"
-    android:value="AIzaSyB4DsJDulyNfi0J9MihjI9RJ5QEByzC4RI"/>  
+    android:value="${GOOGLE_MAPS_API_KEY}"/>  
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -49,4 +49,5 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 </manifest>
