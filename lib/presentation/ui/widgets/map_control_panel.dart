@@ -83,7 +83,7 @@ class _StyledMiniButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: isPrimary
-                  ? primaryBlue.withAlpha(80)
+                  ? primaryBlue.withAlpha(79)
                   : Colors.black.withAlpha(12),
               width: isPrimary ? 2 : 1,
             ),
