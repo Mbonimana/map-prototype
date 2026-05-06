@@ -3,6 +3,7 @@ import 'package:map_prototype_app/data/model/coordinate_model.dart';
 import 'package:map_prototype_app/data/model/location_model.dart';
 
 enum MapStyle { streets, satellite, terrain }
+
 enum MapViewMode { pins, clusters, heatmap }
 
 abstract class MapEngine {
@@ -11,8 +12,7 @@ abstract class MapEngine {
     required AppLatLng userLocation,
     required MapStyle style,
     required MapViewMode viewMode,
-    required Function(LocationModel?)
-    onLocationSelected, // Notification callback
+    required Function(LocationModel?) onLocationSelected,
   });
 
   // Camera Controls
@@ -20,4 +20,5 @@ abstract class MapEngine {
   void tiltCamera();
   void resetCamera();
   void goToUserLocation();
+  void flyToZone(AppLatLng position);
 }

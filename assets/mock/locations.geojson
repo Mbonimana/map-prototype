@@ -400,6 +400,981 @@
                     -1.9679
                 ]
             }
-        }
-    ]
+        },
+      {"type": "Feature",
+      "properties": {
+        "name": "Rwanda Parliament",
+        "category": "landmark",
+        "description": "The seat of the Rwandan legislature and home to the Campaign Against Genocide Museum.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0964, -1.9515]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Presidential Palace Museum",
+        "category": "landmark",
+        "description": "Historical site in Kanombe showcasing the former presidential residence.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1583, -1.9897]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Public Library",
+        "category": "landmark",
+        "description": "A modern public space for reading, digital learning, and community events.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0903, -1.9472]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mount Kigali",
+        "category": "landmark",
+        "description": "The highest point in the city offering hiking trails and panoramic views.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0200, -1.9700]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Imbuga City Walk",
+        "category": "landmark",
+        "description": "A car-free recreational zone in the heart of the CBD.",
+        "weight": 0.8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0605, -1.9452]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rwanda Development Board (RDB)",
+        "category": "service",
+        "description": "Government institution responsible for investment and tourism.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1044, -1.9512]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Heights",
+        "category": "business",
+        "description": "A premier office and retail complex in Kimihurura.",
+        "weight": 0.9
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0955, -1.9538]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Norrsken House Kigali",
+        "category": "business",
+        "description": "Africa's largest hub for entrepreneurship and innovation.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0588, -1.9482]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "CHIC Building",
+        "category": "business",
+        "description": "A massive commercial complex housing hundreds of small businesses.",
+        "weight": 0.8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0570, -1.9485]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Question Coffee Cafe",
+        "category": "business",
+        "description": "Famous specialty coffee roastery supporting Rwandan women farmers.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1005, -1.9365]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Serena Hotel",
+        "category": "business",
+        "description": "A luxury 5-star hotel often used for high-profile diplomatic meetings.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0655, -1.9460]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Marriott Hotel Kigali",
+        "category": "business",
+        "description": "Upscale international hotel located in the downtown area.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0645, -1.9475]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Radisson Blu Hotel",
+        "category": "business",
+        "description": "Modern hotel connected to the Kigali Convention Centre.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0930, -1.9540]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Legacy Clinics",
+        "category": "service",
+        "description": "Private multi-specialty medical facility in Nyarutarama.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1085, -1.9380]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Carnegie Mellon University Africa",
+        "category": "service",
+        "description": "A world-class engineering and technology university campus.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1710, -1.9050]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "African Leadership University",
+        "category": "service",
+        "description": "Innovative higher education institution located in the Innovation City.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1730, -1.9080]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nyamirambo Women's Center",
+        "category": "landmark",
+        "description": "A community project offering walking tours and local crafts.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0515, -1.9610]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fazenda Sengha",
+        "category": "landmark",
+        "description": "Outdoor recreation center featuring horse riding and zip-lining.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0125, -1.9550]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Golf Resort & Villas",
+        "category": "business",
+        "description": "An 18-hole championship golf course in Nyarutarama.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0988, -1.9412]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Repub Lounge",
+        "category": "business",
+        "description": "Popular African restaurant known for its grilled meats and view.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0905, -1.9585]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pili Pili Bistro",
+        "category": "business",
+        "description": "Social hub in Kibagabaga featuring a pool, pizza, and sports screening.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1180, -1.9280]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Shokola Storytellers Cafe",
+        "category": "business",
+        "description": "A cozy library cafe located on the top floor of the public library.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0903, -1.9473]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Business Centre (KBC)",
+        "category": "business",
+        "description": "Iconic building recently renovated into a modern shopping mall.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0945, -1.9535]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "I&M Bank HQ",
+        "category": "service",
+        "description": "Modern eco-friendly bank headquarters in the CBD.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0610, -1.9470]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Green Hills Academy",
+        "category": "service",
+        "description": "A leading international school in the Nyarutarama area.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1065, -1.9415]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Baho International Hospital",
+        "category": "service",
+        "description": "Private hospital providing specialized medical services in Nyarutarama.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1012, -1.9350]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Inzozi Coffee",
+        "category": "business",
+        "description": "Local cafe brand focused on Rwandan social enterprise.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0630, -1.9440]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gikondo Expo Ground",
+        "category": "landmark",
+        "description": "The primary site for Rwanda's International Trade Fair.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0765, -1.9710]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "L'Epicurien",
+        "category": "business",
+        "description": "Fine dining French restaurant in Kimihurura.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0880, -1.9565]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ubumwe Grande Hotel",
+        "category": "business",
+        "description": "Hotel with a popular rooftop bar overlooking the city skyline.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0615, -1.9445]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "EcoPark Nyandungu",
+        "category": "landmark",
+        "description": "A restored wetland and recreational ecotourism park.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1550, -1.9560]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Cultural Village",
+        "category": "landmark",
+        "description": "A space dedicated to promoting Rwandan culture and arts.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0660, -1.9580]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nyamirambo Mosque",
+        "category": "landmark",
+        "description": "The iconic Green Mosque located in the vibrant Nyamirambo district.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0520, -1.9645]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mamba Club",
+        "category": "business",
+        "description": "Rwanda's first bowling alley and leisure center in Kimihurura.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0865, -1.9615]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zen Restaurant",
+        "category": "business",
+        "description": "High-end Asian fusion restaurant in Nyarutarama.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1035, -1.9395]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Khana Khazana",
+        "category": "business",
+        "description": "Well-known Indian restaurant with locations in Kiyovu and Nyarutarama.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0670, -1.9510]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Java House Kigali Heights",
+        "category": "business",
+        "description": "Popular East African coffee house chain.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0950, -1.9545]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Canal Olympia",
+        "category": "business",
+        "description": "Cinema and open-air stage for concerts and films.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1705, -1.9065]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Parents School",
+        "category": "service",
+        "description": "Prominent primary school located in Kimironko.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1195, -1.9420]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Police HQ Kacyiru",
+        "category": "service",
+        "description": "National headquarters of the Rwanda National Police.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0885, -1.9430]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "La Galette",
+        "category": "business",
+        "description": "Long-standing bakery and supermarket in CBD.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0625, -1.9455]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sole Luna",
+        "category": "business",
+        "description": "Renowned Italian pizzeria in Gishishu with great views.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1050, -1.9555]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "1000 Hills Distillery",
+        "category": "business",
+        "description": "The first craft distillery in Rwanda, located in Gatenga.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0850, -1.9820]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Brioche Kacyiru",
+        "category": "business",
+        "description": "Pastry shop and restaurant popular with expats and locals.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0855, -1.9410]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Heaven Restaurant",
+        "category": "business",
+        "description": "Famous boutique hotel and restaurant known for social impact.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0665, -1.9525]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Independent University (ULK)",
+        "category": "service",
+        "description": "Large private university campus in Gisozi.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0620, -1.9180]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Muhima Hospital",
+        "category": "service",
+        "description": "Specialized public hospital for maternity and pediatrics.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0560, -1.9410]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Inkane Coffee",
+        "category": "business",
+        "description": "Artisan coffee spot in the Rebero neighborhood.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0710, -1.9920]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sawa City Supermarket",
+        "category": "business",
+        "description": "Modern supermarket chain branch in Kimironko.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1250, -1.9510]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Onomo Hotel",
+        "category": "business",
+        "description": "Eco-friendly business hotel in the Nyarugenge area.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0680, -1.9425]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Genocide Memorial Library",
+        "category": "service",
+        "description": "Research center and archive located at the memorial site.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0598, -1.9298]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sano Wellness Center",
+        "category": "service",
+        "description": "Popular spa and fitness facility in Nyarutarama.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1040, -1.9420]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rwampara Market",
+        "category": "business",
+        "description": "Local neighborhood market in the Nyamirambo sector.",
+        "weight": 0.8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0580, -1.9680]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ministry of Justice",
+        "category": "service",
+        "description": "Government office responsible for legal affairs.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0935, -1.9425]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bank of Africa Kigali",
+        "category": "service",
+        "description": "Commercial bank branch in the CBD.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0592, -1.9468]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Waka Fitness CBD",
+        "category": "business",
+        "description": "Modern gym and coworking space in the city center.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0590, -1.9430]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Art Center",
+        "category": "landmark",
+        "description": "Art studio and gallery showcasing local talent in Kimihurura.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0830, -1.9540]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Park Inn by Radisson",
+        "category": "business",
+        "description": "Contemporary hotel in the Kiyovu neighborhood.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0685, -1.9490]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Impact Hub Kigali",
+        "category": "business",
+        "description": "Innovation space and community for social entrepreneurs.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0910, -1.9460]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Indiba Art Space",
+        "category": "landmark",
+        "description": "Community art gallery in the Kimihurura area.",
+        "weight": 0.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0840, -1.9580]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fawe Girls School",
+        "category": "service",
+        "description": "Prestigious girls' secondary school in Gisozi.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0680, -1.9120]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "BPR Bank HQ",
+        "category": "service",
+        "description": "Headquarters of Banque Populaire du Rwanda.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0610, -1.9435]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cogebanque HQ",
+        "category": "service",
+        "description": "Main office of a major local commercial bank.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0590, -1.9450]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "T-2000 Supermarket",
+        "category": "business",
+        "description": "Large Chinese-owned department store and supermarket.",
+        "weight": 0.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0590, -1.9440]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali City Market",
+        "category": "business",
+        "description": "Centralized retail and wholesale market for clothing and electronics.",
+        "weight": 0.9
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0585, -1.9448]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Car Wash Grill",
+        "category": "business",
+        "description": "Famous local spot for Nyama Choma (roasted meat) and socializing.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0890, -1.9455]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bamboo Rooftop Restaurant",
+        "category": "business",
+        "description": "Chinese restaurant located on the top of T-2000 with a great view.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0588, -1.9441]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rz Manna",
+        "category": "business",
+        "description": "Korean-Rwandan fusion bakery and cafe in Nyarutarama.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1010, -1.9450]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "IPRC Kigali",
+        "category": "service",
+        "description": "Integrated Polytechnic Regional College in Kicukiro.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1030, -1.9780]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali Christian School",
+        "category": "service",
+        "description": "Large educational institution in the Kibagabaga area.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1140, -1.9310]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Remera Health Center",
+        "category": "service",
+        "description": "Key public health facility serving the Remera sector.",
+        "weight": 0.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1180, -1.9590]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Petit Stade",
+        "category": "landmark",
+        "description": "Smaller indoor arena used for volleyball, basketball, and meetings.",
+        "weight": 0.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.1145, -1.9560]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gisozi Sector Office",
+        "category": "service",
+        "description": "Local government administrative office for Gisozi.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0650, -1.9210]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kigali View Hotel",
+        "category": "business",
+        "description": "Hotel in Nyamirambo offering one of the best vistas of the city.",
+        "weight": 0.3
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0490, -1.9750]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sawa City Kacyiru",
+        "category": "business",
+        "description": "Grocery store serving the diplomatic and government district.",
+        "weight": 0.4
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0870, -1.9420]
+      }
+    }
+  ]
 }
+    

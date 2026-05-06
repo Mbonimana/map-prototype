@@ -22,7 +22,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
 
   static const int tileSize = 256;
 
-  /// TILE RENDER
+  //tile render
 
   @override
   Future<Tile> getTile(int x, int y, int? zoom) async {
@@ -40,8 +40,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
 
     final kernel = _kernelRadius(zoom);
 
-    // 1. PROJECT POINTS INTO TILE SPACE
-
+    // project point
     for (final p in locations) {
       final w = (p.weight ?? 0.3) * intensity;
 
@@ -57,7 +56,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
         continue;
       }
 
-      // 2. SPLAT GAUSSIAN KERNEL INTO GRID
+      //splat gausian onto grid
 
       final gx = ((dx / tileSize) * gridSize).round();
       final gy = ((dy / tileSize) * gridSize).round();
@@ -77,7 +76,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
       }
     }
 
-    // 3. RENDER HEAT FIELD
+    // render heat grid
 
     final paint = Paint();
 
@@ -109,7 +108,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
     return Tile(tileSize, tileSize, bytes!.buffer.asUint8List());
   }
 
-  /// WORLD PROJECTION (SAME AS MAPBOX)
+  //world projection
 
   Offset _toWorld(LocationModel p, double scale) {
     final x = ((p.position.lng + 180) / 360) * scale;
@@ -124,7 +123,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
     return Offset(x, y);
   }
 
-  /// KERNEL SIZE (ZOOM RESPONSIVE)
+  //kernel size
 
   double _kernelRadius(int zoom) {
     return (baseKernelSize * math.pow(1.6, zoom - 10))
@@ -132,7 +131,7 @@ class AdvancedHeatmapTileProvider implements TileProvider {
         .toDouble();
   }
 
-  ///  COLOR RAMP
+  ///  color ram
 
   Color _colorRamp(double v) {
     // normalize curve (important for realism)

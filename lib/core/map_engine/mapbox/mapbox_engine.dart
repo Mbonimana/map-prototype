@@ -37,4 +37,10 @@ class MapboxMapEngine implements MapEngine {
 
   @override
   void goToUserLocation() => _state?.camera.goToUser();
+
+  @override
+  void flyToZone(AppLatLng position) {
+    _state?.camera.flyToPosition(position);
+  }
 }
+  
