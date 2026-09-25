@@ -1,0 +1,142 @@
+name: Release — Version, Build & Distribute
+
+on:
+  push:
+    branches: [develop, main]
+
+# Don't cancel in-progress release runs — a distribution may be mid-flight
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  # 1. VERSIONING — compute a semantic version from commit history
+  # ─────────────────────────────────────────────────────────────
+  versioning:
+    name: Compute Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.semver.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: semver
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          tag_prefix: "v"
+          major_pattern: "(BREAKING CHANGE|!:)"
+          minor_pattern: "feat"
+          format: "${major}.${minor}.${patch}"
+          bump_each_commit: false
+
+      - name: Show version
+        run: echo "New version → ${{ steps.semver.outputs.version }}"
+
+  # ─────────────────────────────────────────────────────────────
+  # 2. ANDROID — build APK + distribute via Fastlane → Firebase
+  # ─────────────────────────────────────────────────────────────
+  android:
+    name: Android — Build & Firebase Distribute
+    needs: versioning
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.8'
+          channel: 'stable'
+          cache: true
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Generate code (build_runner)
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Run Fastlane — Android distribute
+        working-directory: android
+        env:
+          FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          ANDROID_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
+        run: |
+          bundle exec fastlane distribute_firebase \
+            version_name:"${{ needs.versioning.outputs.version }}" \
+            version_code:"${{ github.run_number }}" \
+            dart_env:"env/.env.dev.json"
+
+  # ─────────────────────────────────────────────────────────────
+  # 3. iOS — match (sign) + build IPA + upload to TestFlight
+  # ─────────────────────────────────────────────────────────────
+  ios:
+    name: iOS — Sign & TestFlight
+    needs: versioning
+    runs-on: macos-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.8'
+          channel: 'stable'
+          cache: true
+
+      - name: Setup App Store Connect API Key
+        run: |
+          mkdir -p ~/private_keys
+          echo "${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}" \
+            | base64 --decode > ~/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}.p8
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Generate code (build_runner)
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Run Fastlane — iOS beta (TestFlight)
+        working-directory: ios
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_PATH: ~/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}.p8
+        run: |
+          bundle exec fastlane beta \
+            version_name:"${{ needs.versioning.outputs.version }}" \
+            build_number:"${{ github.run_number }}"
+
+  # ─────────────────────────────────────────────────────────────
+  # 4. (Placeholder) STORE SUBMISSION — only on main
+  # ─────────────────────────────────────────────────────────────
+  # promote_to_stores:
+  #   if: github.ref == 'refs/heads/main'
+  #   needs: [android, ios]
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     ... fastlane deploy_appstore / deploy_playstore ...

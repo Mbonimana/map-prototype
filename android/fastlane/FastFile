@@ -1,0 +1,36 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build APK and distribute to Firebase App Distribution (internal-qa)"
+  lane :distribute_firebase do |options|
+    version_name = options[:version_name] || "0.0.0"
+    version_code = options[:version_code] || "1"
+    skip_build   = options[:skip_build] == "true"
+    split_abi    = options[:split_abi] == "true"
+    dart_env     = options[:dart_env] || "env/.env.dev.json"
+
+    app_id = ENV["FIREBASE_APP_ID_ANDROID"]
+    token  = ENV["FIREBASE_TOKEN"]
+    UI.user_error!("FIREBASE_APP_ID_ANDROID is not set") if app_id.to_s.empty?
+    UI.user_error!("FIREBASE_TOKEN is not set")          if token.to_s.empty?
+
+    unless skip_build
+      build_cmd  = "cd .. && flutter build apk --release"
+      build_cmd += " --split-per-abi" if split_abi
+      build_cmd += " --dart-define-from-file=#{dart_env}" unless dart_env.to_s.empty?
+      build_cmd += " --build-name=#{version_name} --build-number=#{version_code}"
+      sh(build_cmd)
+    end
+
+    apk_path = split_abi \
+      ? "../build/app/outputs/flutter-apk/app-arm64-v8a-release.apk" \
+      : "../build/app/outputs/flutter-apk/app-release.apk"
+
+    firebase_app_distribution(
+      app: app_id,
+      groups: "internal-qa",
+      release_notes: "Build #{version_name} (#{version_code}) from CI",
+      apk_path: apk_path
+    )
+  end
+end
